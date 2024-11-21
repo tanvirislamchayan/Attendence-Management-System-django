@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block start %}
+
+
+   <!-- add probidhan section start -->
+   <div class="col-md-6 col-sm-12 add-form my-5 mx-auto" data="add-probidhan">
+    <form action="" class="border rounded shadow-sm">
+        <h2 class="w-100 p-2 text-center">Add Probidhan</h2>
+        <div class="row p-2">
+            <div class="col-12 mb-2">
+                <label for="probidhan">Probidhan <span>*</span></label>
+                <input type="text" name="probidhan" id="probidhan" class="form-control">
+            </div><!--probidhan-->
+
+            <div class="col-12 mb-2">
+                <label for="year">Year <span>*</span></label>
+                <input type="text" name="year" id="year" class="form-control">
+            </div> <!--publish year-->
+
+
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" class="cancel-btn">Cancel</button>
+                <button type="submit" class="btn-grad">Add</button>
+            </div> <!--buttons-->
+        </div>
+    </form>
+ </div>
+<!-- add probidhan section end -->
+
+{% endblock %}

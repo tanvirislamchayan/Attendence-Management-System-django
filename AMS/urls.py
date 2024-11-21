@@ -25,6 +25,13 @@ urlpatterns = [
     path('', include('home.urls')),
     path('t/', include('teachers.urls')),
     path('d/', include('departments.urls')),
+    path('p/', include('probidhans.urls')),
+    # path('s/', include('seassons.urls')),
+    # path('sem/', include('semesters.urls')),
+    # path('g/', include('groups.urls')),
+    # path('sub/', include('subjects.urls')),
+    # path('std/', include('students.urls')),
+    # path('atd/', include('attendances.urls')),
 ]
 
 # Serve static and media files in development

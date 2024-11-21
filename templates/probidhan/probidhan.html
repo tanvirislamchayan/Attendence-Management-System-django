@@ -1,0 +1,23 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block start %}
+
+   <!-- probidhan section start -->
+   <div class="content" data="probidhans">
+    <div class="row  p-2">
+       <h2 class="text-center p-2 border-bottom col-12 mt-1">Probidhans</h2>
+       <div class="col-12 d-flex justify-content-end">
+           <a class="btn-grad add-btn" href="{% url 'add_probidhans' %}">Add Probidhan</a>
+      </div>
+
+       <div class="col-md-3 col-sm-6 p-2 probidhan-content">
+           <div>
+               <h5>2022</h5>
+               <small>Passed on 2022</small>
+           </div>
+       </div>
+    </div>
+</div>
+<!-- probidhan section end -->
+
+{% endblock %}

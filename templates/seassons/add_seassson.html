@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block start %}
+
+   <!-- add seasson section start -->
+   <div class="col-md-6 col-sm-12 add-form my-5 mx-auto d-none" data="add-seasson">
+    <form action="" class="border rounded shadow-sm">
+        <h3 class="w-100 p-2">Add Seasson</h3>
+        <div class="row p-2">
+            <div class="col-12 mb-2">
+                <label for="seasson">Seasson <span>*</span></label>
+                <input title="Input Seasson" type="text" name="seasson" id="seasson" class="form-control">
+            </div> <!--Seasson-->
+
+            <div class="col-12 mb-2">
+                <label for="seasson_start">Seasson Starting Year <span>*</span></label>
+                <input title="Input Seasson Starting Year" type="text" name="seasson_start" id="seasson_start" class="form-control">
+            </div> <!--seasson starting year-->
+
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" class="cancel-btn">Cancel</button>
+                <button type="submit" class="btn-grad">Add</button>
+            </div> <!--seasson starting year-->
+        </div>
+    </form>
+ </div>
+<!-- add seasson section end -->
+
+{% endblock %}

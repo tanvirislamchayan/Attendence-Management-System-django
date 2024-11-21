@@ -1,0 +1,31 @@
+
+{% extends "base/base.html" %}
+{% load static %}
+{% block start %}
+
+   <!-- seasson Section Start -->
+   <div class="content p-2" data="seasson">
+    <div class="row">
+        <h2 class="p-2 text-center col-12">Seassons</h2>
+        <div class="col-12 d-flex justify-content-end">
+            <button data="add-seasson" class="btn-grad add-btn">Add Seassons</button>
+        </div>
+        <div class="col-md-3 col-sm-6 p-2 seasson-ceontent">
+            <div>
+                <h5>21-22</h5>
+                <small>Starting Year 2021</small>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 p-2 seasson-ceontent">
+            <div>
+                <h5>22-23</h5>
+                <small>Starting Year 2022</small>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- seasson Section End -->
+
+
+{% endblock %}
