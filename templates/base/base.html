@@ -76,7 +76,10 @@
                           <a class="menuitem" href="{% url 'teachers' %}">Teachers</a>
                         </div> <!--teachers-->
 
-                        <div class="aside-menu p-2 m-0" data="departments">Departments</div>
+                        <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'departments' or request.resolver_match.url_name == 'add_departments' %}selected{% endif %}">
+                          <a class="menuitem" href="{% url 'departments' %}">Departments</a>
+                        </div> <!--Departments-->
+
                         <div class="aside-menu p-2 m-0" data="probidhans">Probidhans</div>
                         <div class="aside-menu p-2 m-0" data="seasson">Seasson</div>
                         <div class="aside-menu p-2 m-0" data="semester">Semester</div>

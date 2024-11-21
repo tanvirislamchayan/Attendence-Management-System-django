@@ -7,69 +7,9 @@
 
 
 
-   <!-- departments section start -->
-    <div class="content" data="departments">
-        <div class="row p-2" >
-            <h2 class="text-center p-2 border-bottom col-12 mt-1">Departments</h2>
 
-            <div class="col-12 d-flex justify-content-end">
-                <button class="btn-grad add-btn" data="add-department">Add Department</button>
-           </div>
 
-            <div class="col-md-3 col-sm-6 mb-2 p-0 shadow-sm departments-content border">
-                <div class="img-middle" style="aspect-ratio: 16/9;">
-                    <img src="./img/upload-img.png" alt="Author image">
-                </div>
-                <h6 class="mb-0 mt-1 pl-1">Name</h6>
-            </div>
-         </div>
-    </div>
-   <!-- departments section end -->
 
-   <!-- add departments section start -->
-    <div data="add-department" class="col-12 add-form my-5 d-none">
-       <div class="row">
-           <div class="col-md-9 col-sm-12 col-xs-12 mx-auto">
-               <form class="border rounded shadow-sm" action="">
-                   <h3 class="w-100 border-bottom p-2 text-center">Add Department</h3>
-                   <div class="form-section p-2">
-                       <div class="row">
-                           <div class="col-md-6 col-sm-12">
-                               <div class="w-100 mb-2">
-                                   <label for="name">Department Name <span>*</span></label>
-                                   <input type="text" name="name" id="name" class="form-control">
-                               </div> <!--Deparment Name-->
-
-                               <div class="w-100 mb-2">
-                                   <label for="code">Department Code <span>*</span></label>
-                                   <input type="text" name="code" id="code" class="form-control">
-                               </div> <!--Department Code-->
-
-                               <div class="w-100 mb-2">
-                                   <label for="details">Department Detail</label>
-                                   <textarea name="details" id="details" placeholder="Add Details" class="form-control"></textarea>
-                               </div> <!--Department Details-->
-                           </div> <!--Department info-->
-
-                           <div class="col-md-6 col-sm-12">
-                               <div class="w-100 img-middle border rounded shadow-sm" style="aspect-ratio: 16/9;">
-                                   <img id="dep-img-preview" src="img/upload-img.png" alt="">
-                               </div>
-                               <input type="file" name="dep-img" id="dep-img" class="d-none" onchange="previewDepartmentImage(event)">
-                               <label class="btn-grad m-0 mt-1" for="dep-img">Upload</label>
-                           </div> <!---department image-->
-
-                           <div class="col-12 d-flex justify-content-end">
-                               <button type="button" class="cancel-btn">Cancel</button>
-                               <button type="submit" class="btn-grad">Add</button>
-                           </div>
-                       </div> 
-                   </div>
-               </form>
-           </div>
-       </div>
-    </div>
-   <!-- add departments section end -->
 
    <!-- probidhan section start -->
     <div class="content" data="probidhans">

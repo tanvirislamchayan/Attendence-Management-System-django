@@ -21,9 +21,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # Admin panel
-    path('', include('home.urls')),  # Home app URLs
-    path('t/', include('teachers.urls')),  # Teachers app URLs
+    path('admin/', admin.site.urls),
+    path('', include('home.urls')),
+    path('t/', include('teachers.urls')),
+    path('d/', include('departments.urls')),
 ]
 
 # Serve static and media files in development
