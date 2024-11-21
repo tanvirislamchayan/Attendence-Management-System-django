@@ -1,0 +1,127 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>IPI | {{ page }}</title>
+</head>
+  <body>
+
+    <!-- loader section start -->
+     <section id="loader-section" class="loader-section">
+        <div class="loader">
+            <svg viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="50"></circle>
+            </svg>
+            <svg viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="50"></circle>
+            </svg>
+            <svg viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="50"></circle>
+            </svg>
+          </div>
+     </section>
+    <!-- loader section end -->
+
+
+    <!-- header section start -->
+     <header id="header">
+        <nav class="navbar navbar-expand-lg navbar-light text-white bg-transparent">
+            <a class="navbar-brand text-white" href="#">IMAGE POLYTECHNIC INSTITUTE</a>
+            <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <!-- <span class="navbar-toggler-icon "></span> -->
+              <i class="fa-solid fa-bars fa-xl" style="color: #ffffff;"></i>
+
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                
+              </ul>
+              <div class="form-inline my-2 my-lg-0">
+                <a href="#" class="btn-grad">Log out</a>
+              </div>
+            </div>
+          </nav>
+     </header>
+    <!-- header section end -->
+
+     <!-- main content section start -->
+      <section class="main-content-section">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- aside section start -->
+                 <div class="col-md-2 col-sm-3 p-2 aside">
+                    <div class="aside-content">
+                        <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'home' %}selected{% endif %}" id="dashboard">
+                          <a class="menuitem" href="{% url 'home' %}">Dashboard</a>
+                        </div> <!--dashboard-->
+
+                        <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'authors' or request.resolver_match.url_name == 'add_authors' %}selected{% endif %}">
+                          <a class="menuitem" href="{% url 'authors' %}">Authors</a>
+                        </div> <!--Authors-->
+                        
+
+                        <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'teachers' or request.resolver_match.url_name == 'add_teachers' %}selected{% endif %}">
+                          <a class="menuitem" href="{% url 'teachers' %}">Teachers</a>
+                        </div> <!--teachers-->
+
+                        <div class="aside-menu p-2 m-0" data="departments">Departments</div>
+                        <div class="aside-menu p-2 m-0" data="probidhans">Probidhans</div>
+                        <div class="aside-menu p-2 m-0" data="seasson">Seasson</div>
+                        <div class="aside-menu p-2 m-0" data="semester">Semester</div>
+                        <div class="aside-menu p-2 m-0" data="shift">Group/Shift</div>
+                        <div class="aside-menu p-2 m-0" data="subjects">Subjects</div>
+                        <div class="aside-menu p-2 m-0" data="student">Students</div>
+                        <div class="aside-menu p-2 m-0" data="attendance">Attendance</div>
+                        <div class="aside-menu p-2 m-0" data="attendance-calculation">Attendance Calculation</div>
+                    </div>
+                 </div>
+                <!-- aside section end -->
+            <!-- main content section start -->
+            <div class="col-md-10 col-sm-9 main-content">
+
+                {% block start %}
+                <!-- Default content for the 'start' block, if any -->
+                {% endblock %}
+           
+               </div>
+
+
+            </div>
+        </div>
+      </section>
+     <!-- main content section end -->
+
+
+
+     
+    <!-- content section end -->
+
+     <!-- footer section start -->
+      <section class="container-fluid bg-dark text-white">
+        <div class="text-center w-100 p-2">
+            &copy;All Copyrights Reserved Image Polytechnic Institute | Designed &amp; Developed by <a href="https://www.facebook.com/titanvir01" target="_blank">Tanir Islam</a> CST - IPI
+        </div>
+      </section>
+     <!-- footer section end -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- custom js -->
+     <script src="{% static 'js/app.js' %}"></script>
+  </body>
+</html>

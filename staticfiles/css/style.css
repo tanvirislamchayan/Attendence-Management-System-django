@@ -1,0 +1,490 @@
+/* Univarsal css */
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* global css variables */
+:root {
+    --background:#26a0da;
+    --background-2:#1E1E2F;
+    --background-3:#314755;
+    --red:#cf3232;
+}
+
+
+/* global css */
+
+.btn-grad {background-image: linear-gradient(to right, #314755 0%, #26a0da  51%, #314755  100%)}
+.btn-grad {
+  margin: 5px;
+   padding: 5px 20px;
+   text-align: center;
+   text-transform: uppercase;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: white;            
+   /* box-shadow: 0 0 80px #0005; */
+   border-radius: .3rem;
+   display: block;
+   border: 0;
+   font-size: 700;
+   cursor: pointer;
+ }
+
+ .btn-grad:hover {
+   background-position: right center; 
+   color: #fff;
+   text-decoration: none;
+ }
+
+ .cancel-btn {
+  background: var(--red);
+  margin: 5px;
+  padding: 5px 20px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;            
+  /* box-shadow: 0 0 20px #0005; */
+  border-radius: .3rem;
+  display: block;
+  border: 0;
+  font-size: 700;
+  cursor: pointer;
+ }
+
+
+ body {
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+ }
+
+ .img-middle {
+  display: grid;
+  place-content: center;
+  place-items: center;
+  overflow: hidden;
+  background-size: cover;
+}
+
+.img-middle img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+input {
+  outline: none;
+}
+
+input:focus {
+  box-shadow: none; 
+  border-color: #000;
+}
+
+form {
+  overflow: hidden;
+}
+
+form h2, h3 {
+  background-color: var(--background-2);
+  color: #fff;
+}
+
+form span {
+  color: red;
+}
+
+.required {
+  color: red;
+}
+
+.rounded {
+  overflow: hidden !important;
+}
+
+
+a.menuitem {
+  text-decoration: none;
+  color: #fff;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+a.menuitem:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+
+/* loader section */
+.loader-section {
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  place-content: center;
+  background-color: var(--background-2);
+  z-index: 1001;
+  position: fixed;
+}
+
+.loader {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.loader svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.loader svg circle {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 10px;
+  stroke-linecap: round;
+  animation: animate 2s linear infinite;
+}
+
+.loader svg:nth-child(1) circle {
+  filter: blur(10px);
+  stroke: #43acff;
+}
+
+.loader svg:nth-child(2) circle {
+  filter: blur(20px);
+  stroke: #43acff;
+}
+
+@keyframes animate {
+  0% {
+    stroke-dasharray: 295;
+    stroke-dashoffset: 295;
+  }
+  50% {
+    stroke-dasharray: 295;
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dasharray: 295;
+    stroke-dashoffset: -295;
+  }
+}
+
+
+ /* header section */
+header {
+  width: 100%;
+  background-color: var(--background-2);
+  color: #fff !important;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+#header.sticky {
+  box-shadow: px 2px 15px solid #0005;
+}
+
+/* main content section */
+.main-content-section {
+  width: 100%;
+}
+
+/* aside section */
+.aside {
+  background-color: var(--background-2);
+  color: #fff;
+  min-height: 90vh;
+  position: relative;
+}
+
+.aside-content {
+  position: sticky;
+  top: 70px;
+}
+
+.aside-menu {
+  border-bottom: 1px solid #fff;
+  cursor: pointer;
+}
+
+
+
+
+.aside-menu:last-child {
+  border: 0;
+}
+
+.aside-menu.selected{
+  background-color: #ddd5;
+}
+
+.aside-menu:hover {
+  background-color: #ddd5;
+}
+
+/* content section */
+.content {
+  margin-bottom: 3rem;
+}
+.content h2:nth-child(odd) {
+  background-color: var(--background-3);
+  color: #fff;
+}
+
+
+/* dashboard */
+.dashboard-content div {
+  padding: .5rem;
+  border-radius: .2rem;
+}
+
+.dashboard-content:nth-child(even) div {
+  background-color: var(--background);
+  cursor: pointer;
+  color: #ffff;
+}
+
+.dashboard-content:nth-child(odd) div {
+  background-color: var(--background-3);
+  cursor: pointer;
+  color: #ffff;
+}
+
+/* author section */
+
+/* add author setion */
+
+/* teachers section */
+
+/* add teacher section */
+
+/* departments section */
+
+/* add departments section */
+
+/* probidhan section */
+.probidhan-content div {
+  padding: .5rem;
+  color: white;
+  border-radius: .2rem;
+  box-shadow: 0px 2px 8px #0005;
+}
+
+.probidhan-content:nth-child(odd) div{
+  background-color: var(--background);
+}
+
+.probidhan-content:nth-child(even) div{
+  background-color: var(--background-3);
+}
+
+/* add probidhan section */
+
+/* seasson section */
+.seasson-ceontent {
+  cursor: pointer;
+}
+
+.seasson-ceontent div {
+  padding: .5rem;
+  border-radius: .2rem;
+  color: white;
+  box-shadow: 0px 2px 8px #0005;
+}
+
+.seasson-ceontent:nth-child(odd) div{
+  background-color: var(--background-3);
+}
+
+.seasson-ceontent:nth-child(even) div{
+  background-color: var(--background);
+}
+
+
+/* add seasson section */
+.semester-ceontent div {
+  color: #fff;
+  padding: .5rem;
+  border-radius: .2rem;
+  box-shadow: 0px 2px 8px #0005;
+}
+
+.semester-ceontent:nth-child(odd) div{
+  background-color: var(--background);
+}
+
+.semester-ceontent:nth-child(even) div{
+  background-color: var(--background-3);
+}
+/* semsester section */
+
+/* add semester section */
+
+/* group section */
+.group-content-section div{
+  display: grid;
+  place-content: center;
+  place-items: center;
+  padding: .5rem;
+  border-radius: .2rem;
+  box-shadow: 0px 2px 8px #0005;
+  color: #fff;
+}
+
+.group-content-section:nth-child(odd) div {
+  background-color: var(--background);
+}
+
+.group-content-section:nth-child(even) div {
+  background-color: var(--background-3);
+}
+
+
+/* add group section */
+
+/* subject section */
+.subject-content div {
+  color: #fff;
+  padding: .5rem;
+  border-radius: .2rem;
+  box-shadow: 0px 2px 8px #0005;
+}
+
+.subject-content:nth-child(odd) div{
+  background-color: var(--background);
+}
+
+.subject-content:nth-child(even) div{
+  background-color: var(--background-3);
+}
+/* add subject section */
+
+/* filter subject seciton */
+
+/* students section */
+.search-form {
+  position: relative;
+}
+
+.search-form input {
+  width: 100%;
+  height: 50px;
+  padding: 0.5rem 0.9rem;
+  box-sizing: border-box; 
+  border-radius: 50px;
+  border: .5px solid var(--background-3);
+  font-size: 18px;
+}
+
+.search-form .search-btn {
+  position: absolute;
+  right: 20px;
+  height: 40px;
+  width: 40px;
+  top: 50%;
+  display: grid;
+  place-content: center;
+  place-items: center;
+  transform: translateY(-50%); 
+  border-radius: 50px;
+  color: #fff;
+  background-color: var(--background);
+  border: 0;
+}
+
+.clear-button {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 25px;
+  background: transparent;
+  border: 0;
+  display: none;
+}
+
+.clear-button:hover {
+  color: #333;
+}
+
+.suggestion-box {
+  position: absolute;
+  top: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 10;
+  display: none;
+}
+
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* filter student section */
+
+/* add student section */
+
+/* attendence section */
+
+/* attendence calculatuion section */
+.attendance-calculation-content {
+  cursor: pointer;
+}
+
+
+.attendance-calculation-content div {
+  color: #fff;
+  padding: 1rem;
+  border-radius: .2rem;
+  box-shadow: 0px 2px 8px #0005;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.attendance-calculation-content div h5 {
+  padding: 0;
+  margin: 0;
+}
+
+.attendance-calculation-content:nth-child(odd) div{
+  background-color: var(--background);
+}
+
+.attendance-calculation-content:nth-child(even) div{
+  background-color: var(--background-3);
+}
+
+/* Login Section */
+.login-section {
+  background-color: #f8f9fa;
+  width: 100%;
+}
+
+.login-section .container {
+  min-height: 100vh; 
+}
+
+.card {
+  border-radius: .2rem;
+  overflow: hidden;
+  background: #fff; 
+}

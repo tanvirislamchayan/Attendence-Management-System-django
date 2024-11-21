@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block start %}
+
+   <!-- teachers section start -->
+   <div class="content" data="teachers">
+    <div class="row p-2">
+       <h2 class="text-center p-2 border-bottom col-12 mt-1">Teachers Designation</h2>
+       <div class="col-12 d-flex justify-content-end">
+            <a class="btn-grad add-btn" href="{% url 'add_teachers' %}">Add Teacher</a>
+       </div>
+       <div class="col-md-2 col-sm-4 mb-2 p-2 taecher-content">
+           <div class="img-middle" style="aspect-ratio: 9/11;">
+               <img src="./img/upload-img.png" alt="Author image">
+           </div>
+           <h6 class="mb-0 mt-1 pl-1">Name</h6>
+       </div>
+
+       <div class="col-md-2 col-sm-4 mb-2 p-2 taecher-content ">
+           <div class="img-middle" style="aspect-ratio: 9/11;">
+               <img src="./img/upload-img.png" alt="Author image">
+           </div>
+           <h6 class="mb-0 mt-1 pl-1">Name</h6>
+       </div>
+    </div>
+</div>
+<!-- teachers section end -->
+
+{% endblock %}
