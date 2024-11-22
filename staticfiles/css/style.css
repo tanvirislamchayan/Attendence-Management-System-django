@@ -235,7 +235,7 @@ header {
 .content {
   margin-bottom: 3rem;
 }
-.content h2:nth-child(odd) {
+.content h2 {
   background-color: var(--background-3);
   color: #fff;
 }
