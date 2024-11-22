@@ -2,6 +2,95 @@
 {% load static %}
 {% block start %}
 
+   <!-- students section start -->
+   <div class="content p-2" data="student">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-6 col-sm-12 d-flex justify-content-start align-items-center">
+                <!-- <button type="button" class="add-btn btn-grad" data="filter-student">Filter Students</button> -->
+                <a href="{% url 'add_students' %}" class="add-btn btn-grad" data="add-student">Add Students</a>
+            </div>
 
+            <form action="#" class="search-form col-md-6 col-sm-12 d-flex justify-content-start" onsubmit="searchWithInput(event)">
+                <input 
+                    type="search" 
+                    class="search-input" 
+                    placeholder="Search Student Roll, Name, Semester" 
+                    onfocus="showSuggestions(); showClearButton();" 
+                    oninput="filterSuggestions(this.value); showClearButton();"
+                >
+                <button type="button" class="clear-button" onclick="clearSearchInput()" >
+                    &times; <!-- Cross icon -->
+                </button>
+                <button type="submit" class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <div id="suggestion-box" class="suggestion-box">
+                    <div class="suggestion-item" onclick="selectSuggestion(this)">John Doe - Roll 101 - Semester 1</div>
+                    <div class="suggestion-item" onclick="selectSuggestion(this)">Jane Smith - Roll 102 - Semester 2</div>
+                    <div class="suggestion-item" onclick="selectSuggestion(this)">Mike Johnson - Roll 103 - Semester 3</div>
+                    <div class="suggestion-item" onclick="selectSuggestion(this)">Emily Davis - Roll 104 - Semester 4</div>
+                </div>
+            </form>
+            <!-- filter students -->
+            <div class="col-12 mb-4">
+                <h2 class="w-100 text-center p-2 mt-4">Filter Students</h2>
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 mb-2 form-group">
+                            <label for="semester">Semester <span>*</span></label>
+                            <select name="semester" id="semester" required class="form-control">
+                                <option value="">Select Semester</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-2 form-group">
+                            <label for="semester">Semester <span>*</span></label>
+                            <select name="semester" id="semester" required class="form-control">
+                                <option value="">Select Semester</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-2 form-group">
+                            <label for="semester">Semester <span>*</span></label>
+                            <select name="semester" id="semester" required class="form-control">
+                                <option value="">Select Semester</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-2 form-group">
+                            <label class="invisible">N/A</label>
+                            <input type="submit" value="Filter" class="form-control btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- filter students -->
+
+            <div class="col-12 mt-4">
+                <h2 class="w-100 p-2 text-center text-white">Students of Semester</h2>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>SN.</th>
+                            <th>Roll</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Semester</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>609554</td>
+                            <td>Tanvir Islam</td>
+                            <td>Computer Science and Technology</td>
+                            <td>6th</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+ </div>
+<!-- students section end -->
 
 {% endblock %}

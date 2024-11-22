@@ -2,6 +2,80 @@
 {% load static %}
 {% block start %}
 
+   <!-- add students section start -->
+   <div class="col-12 add-form p-2 " data="add-student">
+    <div class="row">
+        <h3 class="col-12 p-2 text-center">Add Students</h3>
+        <div class="col-md-8 col-sm-12 mx-auto my-3 border shadow-sm p-2">
+            <form action="" class="">
+                <div class="row">
+                    <div class="col-12 mb-2">
+                        <label for="std_name">Full name <span>*</span></label>
+                        <input type="text" name="std_name" id="std_name" required class="form-control">
+                    </div> <!--Student name-->
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="std_code">Code</label>
+                        <input type="text" name="std_code" id="std_code" class="form-control">
+                    </div> <!--student Code-->
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="std_roll">Roll</label>
+                        <input type="text" name="std_roll" id="std_roll" class="form-control" required>
+                    </div> <!--Student Roll-->
+                    <div class="col-12 mb-2">
+                        <label for="std_department">Department <span>*</span></label>
+                        <select name="std_department" id="std_department" class="form-control" required>
+                            <option value="">Select Department</option>
+                        </select>
+                    </div><!--Department-->
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="std_seasson">Seasson <span>*</span></label>
+                        <select name="std_seasson" id="std_seasson" class="form-control" required>
+                            <option value="">Select Seasson</option>
+                        </select>
+                    </div><!--Seasson-->
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="std_shift">Grhoup/Shift <span>*</span></label>
+                        <select name="std_shift" id="std_shift" class="form-control" required>
+                            <option value="">Select Grhoup/Shift</option>
+                        </select>
+                    </div><!--Grhoup/Shift-->
 
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="f_semester">Semester <span>*</span></label>
+                        <select name="f_semester" id="f_semester" class="form-control" required>
+                            <option value="">Select Semester</option>
+                        </select>
+                    </div><!--semester-->
+
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="f_probidhan">Probidhan <span>*</span></label>
+                        <select name="f_probidhan" id="f_probidhan" class="form-control" required>
+                            <option value="">Select Probidhan</option>
+                        </select>
+                    </div><!--Probidhan-->
+
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="submit" class="btn-grad">Add</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <form action="">
+                <h3 class="w-100 text-center p-2">OR UPLOAD EXCEL</h3>
+                <div class="row">
+                    <div class="col-12 mb-2">
+                        <label for="std_excel">Excel File <span>*</span></label>
+                        <input type="file" name="std_excel" id="std_excel" class="form-control" title="Upload .xls or .xlsx file">
+                    </div>
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="btn-grad">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- add students section end -->
 
 {% endblock %}

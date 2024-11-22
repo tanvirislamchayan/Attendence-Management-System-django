@@ -1,0 +1,158 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block start %}
+
+   <!-- attendance calculation section start -->
+   <div class="content" data="attendance-calculation">
+    <div class="row p-2">
+        <h2 class="col-12 p-2 text-center">Attendance Calculateion</h2>
+        <div data="cal-date" class="col-md-3 col-sm-6 my-2 attendance-calculation-content">
+            <div>
+                <h5>Calculate Day</h5>
+            </div>
+        </div><!--calculate day-->
+        <div data="cal-month" class="col-md-3 col-sm-6 my-2 attendance-calculation-content">
+            <div>
+                <h5>Calculate Month</h5>
+            </div>
+        </div><!--calculate month-->
+        <div data="cal-semester" class="col-md-3 col-sm-6 my-2 attendance-calculation-content">
+            <div>
+                <h5>Calculate Semester</h5>
+            </div>
+        </div><!--calculate semester-->
+
+        <!-- calculate day section start -->
+        <div class="calc-result d-none col-12 my-3" data="cal-date">
+            <div class="row">
+                <h3 class="col-12 p-2 text-center">Date Calculation</h3>
+                <form action="" class="w-100 mb-3">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 form-group ">
+                            <label for="d_department">Department <span>*</span></label>
+                            <select required name="d_department" id="d_department" class="form-control">
+                                <option value="">Select Department</option>
+                            </select> 
+                        </div><!--Department-->
+                        <div class="col-md-3 col-sm-6 form-group ">
+                            <label for="d_semester">Semester <span>*</span></label>
+                            <select required name="d_semester" id="d_semester" class="form-control">
+                                <option value="">Select Semester</option>
+                            </select> 
+                        </div><!--Semester-->
+                        <div class="col-md-3 col-sm-6 form-group ">
+                            <label for="d_date">Date <span>*</span></label>
+                            <select required name="d_date" id="d_date" class="form-control">
+                                <option value="">Select Date</option>
+                            </select> 
+                        </div><!--Date-->
+                        <div class="col-md-3 col-sm-6 form-group ">
+                           <label for="submit" class="invisible">Submit</label>
+                           <input type="submit" value="Submit" class="bg-primary text-white form-control">
+                        </div><!--button-->
+                    </div>
+                </form> <!--Calculation form-->
+            </div>
+        </div>
+        <!-- calculate day section end -->
+
+        <!-- calculate month section start -->
+        <div class="calc-result d-none col-12 my-3" data="cal-month">
+            <div class="row">
+                <h3 class="col-12 p-2 text-center">Month Calculation</h3>
+                <form action="" class="w-100 mb-3">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label for="m_department">Department <span>*</span></label>
+                            <select required name="m_department" id="m_department" class="form-control">
+                                <option value="">Select Department</option>
+                            </select> 
+                        </div><!--Department-->
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label for="m_semester">Semester <span>*</span></label>
+                            <select required name="m_semester" id="m_semester" class="form-control">
+                                <option value="">Select Semester</option>
+                            </select> 
+                        </div><!--Semester-->
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label for="m_month">Month <span>*</span></label>
+                            <select required name="m_month" id="m_month" class="form-control">
+                                <option value="">Select Month</option>
+                            </select> 
+                        </div><!--Month-->
+                        <div class="col-md-3 col-sm-6 form-group">
+                           <label for="submit" class="invisible">Submit</label>
+                           <input type="submit" value="Submit" class="bg-primary text-white form-control">
+                        </div><!--button-->
+                    </div>
+                </form> <!--Calculation form-->
+            </div>
+        </div>
+        <!-- calculate month section end -->
+
+        <!-- calculate semester section start -->
+        <div class="calc-result d-none col-12 my-3" data="cal-semester">
+            <div class="row">
+                <h3 class="col-12 p-2 text-center">Semester Calculation</h3>
+                <form action="" class="w-100 mb-3">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="s_department">Department <span>*</span></label>
+                            <select required name="s_department" id="s_department" class="form-control">
+                                <option value="">Select Department</option>
+                            </select> 
+                        </div><!--Department-->
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="s_semester">Semester <span>*</span></label>
+                            <select required name="s_semester" id="s_semester" class="form-control">
+                                <option value="">Select Semester</option>
+                            </select> 
+                        </div><!--Semester-->
+                        <div class="col-md-4 col-sm-6 form-group">
+                            <label for="s_month_start">Month start <span>*</span></label>
+                            <select required name="s_month_start" id="s_month_start" class="form-control">
+                                <option value="">Select Month start</option>
+                            </select> 
+                        </div><!--Month start-->
+                        <div class="col-md-4 col-sm-6 form-group">
+                            <label for="s_month_end">Month End <span>*</span></label>
+                            <select required name="s_month_end" id="s_month_end" class="form-control">
+                                <option value="">Select Month End</option>
+                            </select> 
+                        </div><!--Month End-->
+                        <div class="col-md-4 col-sm-6 form-group">
+                           <label for="submit" class="invisible">Submit</label>
+                           <input type="submit" value="Submit" class="bg-primary text-white form-control">
+                        </div><!--button-->
+                    </div>
+                </form> <!--Calculation form-->
+
+            </div>
+        </div>
+        <!-- calculate semester section end -->
+
+        <div class="col-12 my-5">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Roll</th>
+                        <th>Name</th>
+                        <th class="text-end">Total Attendance (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>189296</td>
+                        <td>Muslima Jahan</td>
+                        <td class="text-end">92%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+ </div>
+<!-- attendance calculation section end -->
+
+{% endblock %}

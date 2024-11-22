@@ -2,6 +2,68 @@
 {% load static %}
 {% block start %}
 
+   <!-- add subject section start -->
+   <div class="col-12 add-form p-2" data="add-subject">
+    <div class="row">
+        <h3 class="text-center col-12 p-2 text-white">Add Subjects</h3>
+        <div class="col-md-7 col-sm-12 mx-auto my-5">
+            <form action="" class="border rounded shadow-sm p-2">
+                <div class="row">
+                    <div class="col-12 mb-2">
+                        <label for="subject_name">Subject Name <span>*</span></label>
+                        <input class="form-control" title="Enter Subject Name" type="text" name="subject_name" id="subject_name" required placeholder="Subject Name">
+                    </div> <!--subject name-->
 
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="subject_code">Subject Code <span>*</span></label>
+                        <input class="form-control" title="Enter Subject Code" type="text" name="subject_name" id="subject_name" required placeholder="Subject Code">
+                    </div> <!--subject code-->
+
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="subject_semester">Semester <span>*</span></label>
+                        <select name="subject_semester" id="subject_semester" class="form-control" required>
+                            <option value="">Select Semester</option>
+                        </select>
+                    </div> <!--subject semester-->
+
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="subject_department">Department <span>*</span></label>
+                        <select name="subject_department" id="subject_department" class="form-control" required>
+                            <option value="">Select Department</option>
+                        </select>
+                    </div> <!--subject Department-->
+
+                    <div class="col-md-6 col-sm-12 mb-2">
+                        <label for="subject_probidhan">Probidhan <span>*</span></label>
+                        <select name="subject_probidhan" id="subject_probidhan" class="form-control">
+                            <option value="">Select Probidhan</option>
+                        </select>
+                    </div> <!--subject Probidhan-->
+
+                    <div class="col-md-4 col-sm-6 mb-2">
+                        <label for="subject_theory">Theory</label>
+                        <input type="text" class="form-control" name="subject_theory" id="subject_theory" placeholder="Thory">
+                    </div> <!--subject Theory-->
+
+                    <div class="col-md-4 col-sm-6 mb-2">
+                        <label for="subject_practical">Practical</label>
+                        <input type="text" name="subject_practical" id="subject_practical" class="form-control" placeholder="Practical">
+                    </div> <!--subject Practical-->
+
+                    <div class="col-md-4 col-sm-12 mb-2">
+                        <label for="subject_credit">Credit</label>
+                        <input type="text" name="subject_credit" id="subject_credit" class="form-control" placeholder="Credit">
+                    </div> <!--subject Credit-->
+
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="btn-grad">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- add subject section end -->
 
 {% endblock %}

@@ -2,6 +2,58 @@
 {% load static %}
 {% block start %}
 
+   <!-- subjects section start -->
+   <div class="content p-2" data="subjects">
+    <div class="row">
+        <div class="col-12 mb-2 d-flex justify-content-end">
+            <!-- <button data="filter-subject" type="button" class="btn-grad add-btn">Filter Subject</button> -->
+            <a href="{% url 'add_subjects' %}" class="btn-grad add-btn">Add Subjects</a>
+        </div>
+
+        <h2 class="w-100 p-2 text-center">Filter Subjects</h2>
+        <div class="col-12 mb-5">
+            <form action="">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-2 form-group">
+                        <label for="semester">Semester <span>*</span></label>
+                        <select name="semester" id="semester" required class="form-control">
+                            <option value="">Select semester</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2 form-group">
+                        <label for="department">Department <span>*</span></label>
+                        <select name="department" id="department" required class="form-control">
+                            <option value="">Select Department</option>
+                        </select>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2 form-group">
+                        <label for="probidhan">Probidhan <span>*</span></label>
+                        <select name="probidhan" id="probidhan" required class="form-control">
+                            <option value="">Select Probidhan</option>
+                        </select>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2 form-group">
+                        <label class="invisible" for="semester">NA</label>
+                        <input type="submit" class="form-control btn btn-primary" value="Filter">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <h2 class="w-100 p-2 text-center">Subjects for 1st Semester</h2>
+        <div class="col-md-3 col-sm-6 p-2 subject-content">
+            <div>
+                <h5>Subject name</h5>
+                <small>Code: 12345</small>
+                <small>Credit: 3</small>
+                <small>Theory: 2</small>
+            </div>
+        </div>
+    </div>
+ </div>
+<!-- subjects section end -->
+
 
 
 {% endblock %}

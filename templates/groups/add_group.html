@@ -2,6 +2,24 @@
 {% load static %}
 {% block start %}
 
+   <!-- add shift section start -->
+   <div class="col-md-6 col-sm-12 add-form my-5 mx-auto" data="add-group">
+    <form action="" class="border rounded shadow-sm">
+        <h3 class="w-100 p-2">Add Groups/Shifts</h3>
+        <div class="row p-2">
+            <div class="col-12 mb-2">
+                <label for="shift">Group/Shift <span>*</span></label>
+                <input title="Enter Group/Shift Name" type="text" name="shift" id="shift" class="form-control">
+            </div> <!--Seasson-->
 
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" class="cancel-btn">Cancel</button>
+                <button type="submit" class="btn-grad">Add</button>
+            </div> <!--btn-->
+        </div>
+    </form>
+ </div>
+
+<!-- add shift section end -->
 
 {% endblock %}

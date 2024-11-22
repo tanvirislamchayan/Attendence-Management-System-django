@@ -62,36 +62,56 @@
             <div class="row">
                 <!-- aside section start -->
                  <div class="col-md-2 col-sm-3 p-2 aside">
-                    <div class="aside-content">
-                        <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'home' %}selected{% endif %}" id="dashboard">
-                          <a class="menuitem" href="{% url 'home' %}">Dashboard</a>
-                        </div> <!--dashboard-->
-
-                        <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'authors' or request.resolver_match.url_name == 'add_authors' %}selected{% endif %}">
-                          <a class="menuitem" href="{% url 'authors' %}">Authors</a>
-                        </div> <!--Authors-->
-                        
-
-                        <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'teachers' or request.resolver_match.url_name == 'add_teachers' %}selected{% endif %}">
-                          <a class="menuitem" href="{% url 'teachers' %}">Teachers</a>
-                        </div> <!--teachers-->
-
-                        <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'departments' or request.resolver_match.url_name == 'add_departments' %}selected{% endif %}">
-                          <a class="menuitem" href="{% url 'departments' %}">Departments</a>
-                        </div> <!--Departments-->
-
-                        <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'probidhans' or request.resolver_match.url_name == 'add_probidhans' %}selected{% endif %}">
-                          <a class="menuitem" href="{% url 'probidhans' %}">Probidhans</a>
-                        </div> <!--Probidhans-->
-
-                        <div class="aside-menu p-2 m-0" data="seasson">Seasson</div>
-                        <div class="aside-menu p-2 m-0" data="semester">Semester</div>
-                        <div class="aside-menu p-2 m-0" data="shift">Group/Shift</div>
-                        <div class="aside-menu p-2 m-0" data="subjects">Subjects</div>
-                        <div class="aside-menu p-2 m-0" data="student">Students</div>
-                        <div class="aside-menu p-2 m-0" data="attendance">Attendance</div>
-                        <div class="aside-menu p-2 m-0" data="attendance-calculation">Attendance Calculation</div>
+                  <div class="aside-content">
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'home' %}selected{% endif %}" id="dashboard">
+                        <a class="menuitem" href="{% url 'home' %}">Dashboard</a>
                     </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'authors' or request.resolver_match.url_name == 'add_authors' %}selected{% endif %}" id="authors">
+                        <a class="menuitem" href="{% url 'authors' %}">Authors</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'teachers' or request.resolver_match.url_name == 'add_teachers' %}selected{% endif %}" id="teachers">
+                        <a class="menuitem" href="{% url 'teachers' %}">Teachers</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'departments' or request.resolver_match.url_name == 'add_departments' %}selected{% endif %}" id="departments">
+                        <a class="menuitem" href="{% url 'departments' %}">Departments</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'probidhans' or request.resolver_match.url_name == 'add_probidhans' %}selected{% endif %}" id="probidhans">
+                        <a class="menuitem" href="{% url 'probidhans' %}">Probidhans</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'seassons' or request.resolver_match.url_name == 'add_seassons' %}selected{% endif %}" id="seassons">
+                        <a class="menuitem" href="{% url 'seassons' %}">Seasons</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'semesters' or request.resolver_match.url_name == 'add_semesters' %}selected{% endif %}" id="semester">
+                        <a class="menuitem" href="{% url 'semesters' %}">Semesters</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'groups' or request.resolver_match.url_name == 'add_groups' %}selected{% endif %}" id="shift">
+                        <a class="menuitem" href="{% url 'groups' %}">Group/Shift</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'subjects' or request.resolver_match.url_name == 'add_subjects' %}selected{% endif %}" id="subjects">
+                        <a class="menuitem" href="{% url 'subjects' %}">Subjects</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'students' or request.resolver_match.url_name == 'add_students' %}selected{% endif %}" id="student">
+                        <a class="menuitem" href="{% url 'students' %}">Students</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'attendance' %}selected{% endif %}" id="attendance">
+                        <a class="menuitem" href="{% url 'attendance' %}">Attendance</a>
+                    </div>
+                
+                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'calculate_attendance' %}selected{% endif %}" id="attendance-calculation">
+                        <a class="menuitem" href="{% url 'calculate_attendance' %}" title="Attendance Calculation">Calculation</a>
+                    </div>
+                </div>
+                                
                  </div>
                 <!-- aside section end -->
             <!-- main content section start -->

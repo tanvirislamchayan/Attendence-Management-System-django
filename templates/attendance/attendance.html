@@ -2,6 +2,89 @@
 {% load static %}
 {% block start %}
 
+   <!-- attendance section start -->
+   <div class="content" data="attendance">
+    <div class="row  p-2">
+        <h2 class="text-center p-2 border-bottom col-12 mt-1">Student Attendance</h2>
+        <div class="col-md-4 col-sm-6 p-2">
+            <label for="a_teacher">Teacher <span class="required">*</span></label>
+            <div class="form-control">Engr. Manik Ullah</div>
+        </div> <!--Teacher-->
 
+        <div class="col-md-4 col-sm-6 p-2">
+            <label for="a_department">Department <span class="required">*</span></label>
+            <select name="a_department" id="a_department" class="form-control" required>
+                <option value="" checked>Select Department</option>
+                <option value="computer" checked>Computer</option>
+                <option value="civil" checked>Civil</option>
+            </select>
+        </div> <!--Departments-->
+
+        <div class="col-md-4 col-sm-6 p-2">
+            <label for="a_semester">Semester <span class="required">*</span></label>
+            <select name="a_semester" id="a_semester" class="form-control" required>
+                <option value="" checked>Select Semester</option>
+                <option value="1st" checked>1st</option>
+                <option value="2nd" checked>2nd</option>
+            </select>
+        </div> <!--Semester-->
+
+        <div class="col-md-4 col-sm-6 p-2">
+            <label for="a_subject">Subject <span class="required">*</span></label>
+            <select name="a_subject" id="a_subject" class="form-control" required>
+                <option value="" checked>Select Subject</option>
+            </select>
+        </div> <!--subject-->
+
+        <div class="col-md-4 col-sm-6 p-2">
+            <label for="a_date">Date <span class="required">*</span></label>
+            <input type="date" name="a_date" id="a_date" class="form-control"> 
+        </div> <!--date-->
+        
+        <div class="col-md-4 col-sm-6 p-2">
+            <label for="submit-btn" class="invisible">Submit</label>
+            <input type="button" value="Submit" class="form-control bg-primary text-white">
+        </div>
+
+        <div class="col-12 student-table">
+            <div class="table-main" style="overflow-x: auto;">
+                <form action="" class="attendance-table">
+                    <table class="table table-hover w-100">
+                        <thead >
+                            <tr>
+                                <th></th>
+                                <th>Roll</th>
+                                <th>Name</th>
+                                <th>status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="present" id="std_id">
+                                </td>
+                                <td>189296</td>
+                                <td>Muslima Jahan</td>
+                                <td>Absent</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="present" id="std_id">
+                                </td>
+                                <td>609554</td>
+                                <td>Tanvir Islam</td>
+                                <td>Absent</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="w-100 d-flex justify-content-end">
+                        <button type="submit" class="btn-grad">Present</button>
+                    </div>
+                </form>
+            </div>
+        </div><!--student table-->
+    </div>
+</div>
+<!-- attendance section end -->
 
 {% endblock %}
