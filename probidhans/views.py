@@ -15,4 +15,4 @@ def add_probidhans(req):
     context = {
         'page': 'Add Probidhans'
     }
-    return render(req, 'probidhan/add_probidhan.html')
+    return render(req, 'probidhan/add_probidhan.html', context)

@@ -26,7 +26,7 @@ urlpatterns = [
     path('t/', include('teachers.urls')),
     path('d/', include('departments.urls')),
     path('p/', include('probidhans.urls')),
-    path('s/', include('seassons.urls')),
+    path('s/', include('sessions.urls')),
     path('sem/', include('semesters.urls')),
     path('g/', include('groups.urls')),
     path('sub/', include('subjects.urls')),

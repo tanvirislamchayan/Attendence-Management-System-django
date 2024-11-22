@@ -40,6 +40,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+EXTERNAL_APPS = [
+    'home',
+    'teachers',
+    'departments',
+    'probidhans',
+    'semesters',
+    'groups',
+    'subjects',
+    'students',
+    'attendances',
+]
+
+INSTALLED_APPS += EXTERNAL_APPS
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

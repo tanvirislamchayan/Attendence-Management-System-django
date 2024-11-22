@@ -15,4 +15,4 @@ def add_departments(req):
         'page': 'Add Departments'
     }
 
-    return render(req, 'departments/add_departments.html')
+    return render(req, 'departments/add_departments.html', context)
