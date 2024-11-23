@@ -70,6 +70,16 @@
   background-size: cover;
 }
 
+.img-middle:nth-child(odd) {
+  background-color: var(--background-3);
+  color: #fff;
+}
+
+.img-middle:nth-child(even) {
+  background-color: var(--background);
+  color: #fff;
+}
+
 .img-middle img {
   height: 100%;
   width: 100%;

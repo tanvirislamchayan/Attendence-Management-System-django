@@ -23,7 +23,7 @@ class TeacherAdmin(admin.ModelAdmin):
     # Add a custom form or fieldsets if you want more control over the fields shown in the form
     fieldsets = (
         (None, {
-            'fields': ('user', 'mobile_number', 'designation', 'department', 'is_active', 'is_teacher', 'is_author', 'details', 'image')
+            'fields': ('user', 'mobile_number', 'designation', 'department', 'is_active', 'is_teacher', 'is_author', 'details', 'image', 'short_designation', 'short_department')
         }),
     )
 

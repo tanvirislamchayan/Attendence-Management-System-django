@@ -7,33 +7,38 @@
     <div class="content" data="authors">
         <div class="row p-2">
            <h2 class="text-center p-2 border-bottom col-12 mt-1">Authors</h2>
+            {% include "base/message.html" %}
+
            <div class="col-12 d-flex justify-content-end">
                <a class="btn-grad add-btn" href="{% url 'add_authors' %}" >Add Authors</a>
            </div>
 
-           <div class="col-md-2 col-sm-4 mb-2 p-2 shadow-sm author-content">
-               <div class="img-middle" style="aspect-ratio: 9/11;">
-                   <img src="./img/upload-img.png" alt="Author image">
+           {% for author in authors %}
+           <div title="{{ author.user.first_name }}" class="col-md-2 col-sm-4 mb-2 p-2 shadow-sm author-content">
+            <div class="border rounded shadow-sm">
+                <div class="img-middle border-bottom border-danger" style="aspect-ratio: 9/11;">
+                    {% if author.image %}
+                    <img src="/media/{{ author.image }}" alt="Author image">
+                    {% else %}
+                    <img src="./img/upload-img.png" alt="Author image">
+                    {% endif %}
                </div>
-               <h6 class="mb-0 mt-1 pl-1">Name</h6>
-               <small class="pl-1 mb-1">Designaton</small>
+                <h6 title="{{ author.user.first_name }}" class="mb-0 mt-1 pl-1">
+                    {{ author.user.first_name|slice:":12" }}
+                    {% if author.user.first_name|length > 12 %}...{% endif %}
+                </h6>
+                <small class="pl-1 mb-1">
+                    {% if author.short_designation %}
+                    {{ author.short_designation }},
+                    {% endif %}
+                    {% if author.short_department %}
+                    {{ author.short_department }}
+                    {% endif %}
+                </small>
+            </div>
+               
            </div>
-
-           <div class="col-md-2 col-sm-4 mb-2 p-2 shadow-sm author-content">
-               <div class="img-middle" style="aspect-ratio: 9/11;">
-                   <img src="./img/upload-img.png" alt="Author image">
-               </div>
-               <h6 class="mb-0 mt-1 pl-1">Name</h6>
-               <small class="pl-1 mb-1">Designaton</small>
-           </div>
-
-           <div class="col-md-2 col-sm-4 mb-2 p-2 shadow-sm author-content">
-               <div class="img-middle" style="aspect-ratio: 9/11;">
-                   <img src="./img/upload-img.png" alt="Author image">
-               </div>
-               <h6 class="mb-0 mt-1 pl-1">Name</h6>
-               <small class="pl-1 mb-1">Designaton</small>
-           </div>
+           {% endfor %}
         </div>
     </div>
    <!-- author section end -->

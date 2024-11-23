@@ -37,12 +37,38 @@ class Teacher(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher')
     mobile_number = models.CharField(max_length=15, unique=True, validators=[MOBILE_REGEX])
     designation = models.ForeignKey(Designation, on_delete=models.SET_NULL, null=True, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, related_name='teachers')
     details = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='teacher_images/', null=True, blank=True)
+    short_designation = models.CharField(max_length=10, null=True, blank=True)
+    short_department = models.CharField(max_length=10, null=True, blank=True)
 
 
     def save(self, *args, **kwargs):
+        if self.designation and self.designation.name:
+            self.short_designation = ''.join(
+                word[0].upper() for word in self.designation.name.split() 
+                if word.lower() not in ['and', 'for', 'or']
+            )
+        else:
+            self.short_designation = None
+        
+        if self.department and self.department.name:
+            self.short_department = ''.join(
+                word[0].upper() for word in self.department.name.split() 
+                if word.lower() not in ['and', 'for', 'or']
+            )
+        else:
+            self.short_department = None
+
+        # Ensure user's staff status matches `is_active`
+        if self.is_active:
+            self.user.is_staff = True
+        else:
+            self.user.is_staff = False
+        
+        # Save the related user
+        self.user.save()
         # Check if the instance is being updated (not created)
         if self.pk:
             try:
