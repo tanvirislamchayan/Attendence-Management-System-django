@@ -9,63 +9,63 @@
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="authors">
                 <div>
                     <h5>Author</h5>
-                    <small>1 Person</small>
+                    <small> {{ authors }}&nbsp;{{ authors|pluralize:"Author,Authors" }}</small>
                 </div>
             </div>
     
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="teachers">
                 <div>
                     <h5>Teachers</h5>
-                    <small>10 Teachers</small>
+                    <small> {{ teachers }}&nbsp;{{ teachers|pluralize:"Teacher,Teachers" }}</small>
                 </div>
             </div>
     
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="departments">
                 <div>
                     <h5>Departments</h5>
-                    <small>10 Departments</small>
+                    <small> {{ departments }}&nbsp;{{ departments|pluralize:"Department,Departments" }}</small>
                 </div>
             </div>
     
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="probidhans">
                 <div>
                     <h5>Probidhans</h5>
-                    <small>10 Probidhans</small>
+                    <small> {{ probidhans }}&nbsp;{{ probidhans|pluralize:"Probidhan,Probidhans" }}</small>
                 </div>
             </div>
     
-            <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="seassons">
+            <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="sessions">
                 <div>
-                    <h5>Seasons</h5>
-                    <small>10 Seasons</small>
+                    <h5>Sessions</h5>
+                    <small> {{ sessions }}&nbsp;{{ sessions|pluralize:"Session,Sessions" }}</small>
                 </div>
             </div>
     
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="semester">
                 <div>
                     <h5>Semesters</h5>
-                    <small>8 Semesters</small>
+                    <small> {{ semesters }}&nbsp;{{ semesters|pluralize:"Semester,Semesters" }}</small>
                 </div>
             </div>
     
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="shift">
                 <div>
                     <h5>Group/Shift</h5>
-                    <small>2 Group/Shift</small>
+                    <small> {{ groups }}&nbsp;{{ groups|pluralize:"Group/Shift,Groups/Shifts" }}</small>
                 </div>
             </div>
     
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="subjects">
                 <div>
                     <h5>Subjects</h5>
-                    <small>10 Subjects</small>
+                    <small> {{ subjects }}&nbsp;{{ subjects|pluralize:"Subject,Subjects" }}</small>
                 </div>
             </div>
     
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="student">
                 <div>
                     <h5>Students</h5>
-                    <small>10 Students</small>
+                    <small> {{ students }}&nbsp;{{ students|pluralize:"Student,Students" }}</small>
                 </div>
             </div>
     

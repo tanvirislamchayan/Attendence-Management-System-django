@@ -45,6 +45,7 @@ EXTERNAL_APPS = [
     'teachers',
     'departments',
     'probidhans',
+    'session',
     'semesters',
     'groups',
     'subjects',
