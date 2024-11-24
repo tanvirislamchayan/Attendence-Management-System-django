@@ -4,8 +4,11 @@
 
    <!-- add teacher section start -->
    <div data="add-teacher" class="col-12 add-form my-5">
+    {% include "base/message.html" %}
+
     <div class="row">
-        <form action="#" class="col-8 col-sm-8 col-xs-12 border mx-auto rounded shadow-sm">
+        <form action="#" method="post" class="col-8 col-sm-8 col-xs-12 border mx-auto rounded shadow-sm" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="row">
                 <h2 class="w-100 p-2 text-center">Add Teacher</h2>
                 
@@ -14,10 +17,10 @@
                     <!-- Image Section (first on XS devices) -->
                     <div class="col-md-3 col-sm-12 mb-2 order-sm-first order-md-last">
                         <div class="w-100 img-middle rounded" style="aspect-ratio: 9/11;">
-                            <img id="teacher_preview" src="./img/upload-img.png" alt="Preview" class="rounded">
+                            <img id="teacher_preview" src="{% static 'img/upload-img.png' %}" alt="Preview" class="rounded">
                         </div>
-                        <input type="file" name="teacher_image" id="teacher_image" class="d-none" accept="image/*" onchange="previewTeacherImage(event)">
-                        <label for="teacher_image" class="btn-grad m-0 mt-2">Upload</label>
+                        <input type="file" name="image" id="image" class="d-none" accept="image/*" onchange="previewTeacherImage(event)">
+                        <label for="image" class="btn-grad m-0 mt-2">Upload</label>
                     </div> <!-- Image Section -->
 
                     <!-- Form Section -->
@@ -49,18 +52,20 @@
             </div>
             <div class="row p-0">
                 <div class="col-md-6 col-sm-12 mb-2">
-                    <label for="a_pass">Password <span>*</span></label>
-                    <input type="password" name="a_pass" id="a_pass" class="form-control" required>
+                    <label for="pass">Password <span>*</span></label>
+                    <input type="password" name="pass" id="pass" class="form-control" required>
                 </div><!--password-->
                 <div class="col-md-6 col-sm-12 mb-2">
-                    <label for="a_re_pass">Retype Password <span>*</span></label>
-                    <input type="password" name="a_re_pass" id="a_re_pass" class="form-control" required>
+                    <label for="re_pass">Retype Password <span>*</span></label>
+                    <input type="password" name="re_pass" id="re_pass" class="form-control" required>
                 </div> <!--repass-->
                 <div class="col-md-6 col-sm-6 mb-2 form-group">
                     <label for="designation">Designation <span style="color:red;">*</span></label>
                     <select name="designation" id="designation" class="form-control" required>
                         <option value="">Select Designation</option>
-                        <option value="cheap-instruction">Cheap Instructor</option>
+                        {% for des in designations %}
+                        <option value="{{des.id}}">{{ des.name }}</option>
+                        {% endfor %}
                     </select>
                 </div> <!--designation-->
 
@@ -68,7 +73,9 @@
                     <label for="department">Department</label>
                     <select name="department" id="department" class="form-control">
                         <option value="">Select Department</option>
-                        <option value="cheap-instruction">Cheap Instructor</option>
+                        {% for dep in departments %}
+                        <option value="{{ dep.id }}"> {{dep.name}} </option>
+                        {% endfor %}
                     </select>
                 </div> <!--department-->
 
@@ -85,7 +92,7 @@
 
                     <div class="form-group">
                         <label for="is_teacher" title="This will give all permissions to access for software">Teacher Permission: </label>
-                        <input type="checkbox" name="is_teacher" id="is_teacher" checked disabled="disabled">
+                        <input type="checkbox" name="is_teacher" id="is_teacher" checked >
                     </div> <!--Teacher Permission-->
                 </div> <!--Author Permission-->
             </div>

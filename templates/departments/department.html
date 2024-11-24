@@ -4,6 +4,7 @@
 
    <!-- departments section start -->
    <div class="content" data="departments">
+    {% include "base/message.html" %}
     <div class="row p-2" >
         <h2 class="text-center p-2 border-bottom col-12 mt-1">Departments</h2>
 
@@ -11,12 +12,20 @@
             <a class="btn-grad add-btn" href="{% url 'add_departments' %}">Add Department</a>
        </div>
 
-        <div class="col-md-3 col-sm-6 mb-2 p-0 shadow-sm departments-content border">
-            <div class="img-middle" style="aspect-ratio: 16/9;">
-                <img src="./img/upload-img.png" alt="Author image">
+       {% for dep in departments %}
+        <div title="{{dep.name}}" class="col-md-4 col-sm-6 mb-2 p-2 departments-content">
+            <div class="border shadow-sm rounded">
+                <div class="img-middle border-bottom border-danger" style="aspect-ratio: 16/9;">
+                    {% if dep.image %}
+                    <img src="/media/{{dep.image}}" alt="Department image">
+                    {% else %}
+                    <img src="{% static 'img/upload-img.png' %}" alt="Department image">
+                    {% endif %}
+                </div>
+                <h6 class="mb-0 my-2 pl-1">{{ dep.name|slice:":31" }} {% if dep.name|length > 31 %}...{% endif %} </h6>
             </div>
-            <h6 class="mb-0 mt-1 pl-1">Name</h6>
         </div>
+        {% endfor %}
      </div>
 </div>
 <!-- departments section end -->

@@ -4,39 +4,42 @@
 
 <!-- teachers section start -->
 <div class="content" data="teachers">
+    {% include "base/message.html" %}
+
     <div class="row p-2">
         <div class="col-12 d-flex justify-content-end">
             <a class="btn-grad add-btn" href="{% url 'add_teachers' %}">Add Teacher</a>
         </div>
 
         {% for dep in departments %}
-            <h2 class="text-center p-2 border-bottom col-12 my-2">{{ dep.name }}</h2>
-            {% for teacher in dep.teachers.all %}
-                <div title="{{ teacher.user.first_name }}" class="col-md-2 col-sm-4 mb-5 p-2 teacher-content">
-                    <div class="border rounded shadow-sm">
-                        <div class="img-middle border-bottom border-danger" style="aspect-ratio: 9/11;">
-                            {% if teacher.image %}
-                                <img src="/media/{{ teacher.image }}" alt="Teacher image">
-                            {% else %}
-                                <img src="{% static 'img/upload-img.png' %}" alt="Teacher image">
-                            {% endif %}
-                        </div>
-                        <h6 title="{{ teacher.user.first_name }}" class="mb-0 mt-1 pl-1">
-                            {{ teacher.user.first_name|slice:":12" }}
-                            {% if teacher.user.first_name|length > 12 %}...{% endif %}
-                        </h6>
-                        <small class="pl-1 mb-1">
-                            {% if teacher.short_designation %}
-                                {{ teacher.short_designation }},
-                            {% endif %}
-                            {% if teacher.short_department %}
-                                {{ teacher.short_department }}
-                            {% endif %}
-                        </small>
+        <h2 class="text-center p-2 border-bottom col-12 my-2">{{ dep.name }}</h2>
+        {% for teacher in dep.filtered_teachers %}
+            <div title="{{ teacher.user.first_name }}" class="col-md-2 col-sm-4 mb-5 p-2 teacher-content">
+                <div class="border rounded shadow-sm">
+                    <div class="img-middle border-bottom border-danger" style="aspect-ratio: 9/11;">
+                        {% if teacher.image %}
+                            <img src="/media/{{ teacher.image }}" alt="Teacher image">
+                        {% else %}
+                            <img src="{% static 'img/upload-img.png' %}" alt="Teacher image">
+                        {% endif %}
                     </div>
+                    <h6 title="{{ teacher.user.first_name }}" class="mb-0 mt-1 pl-1">
+                        {{ teacher.user.first_name|slice:":12" }}
+                        {% if teacher.user.first_name|length > 12 %}...{% endif %}
+                    </h6>
+                    <small class="pl-1 mb-1">
+                        <b>
+                        {% if teacher.designation %}
+                            {{ teacher.designation }}
+                        {% endif %}
+                        
+                        </b>
+                    </small>
                 </div>
-            {% endfor %}
+            </div>
         {% endfor %}
+    {% endfor %}
+    
     </div>
 </div>
 <!-- teachers section end -->

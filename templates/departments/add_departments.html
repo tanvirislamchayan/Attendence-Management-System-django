@@ -4,9 +4,11 @@
 
    <!-- add departments section start -->
    <div data="add-department" class="col-12 add-form my-5">
+    {% include "base/message.html" %}
     <div class="row">
         <div class="col-md-9 col-sm-12 col-xs-12 mx-auto">
-            <form class="border rounded shadow-sm" action="">
+            <form class="border rounded shadow-sm" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <h3 class="w-100 border-bottom p-2 text-center">Add Department</h3>
                 <div class="form-section p-2">
                     <div class="row">
@@ -31,8 +33,8 @@
                             <div class="w-100 img-middle border rounded shadow-sm" style="aspect-ratio: 16/9;">
                                 <img id="dep-img-preview" src="img/upload-img.png" alt="">
                             </div>
-                            <input type="file" name="dep-img" id="dep-img" class="d-none" onchange="previewDepartmentImage(event)">
-                            <label class="btn-grad m-0 mt-1" for="dep-img">Upload</label>
+                            <input type="file" name="image" accept="image/*" id="image" class="d-none" onchange="previewDepartmentImage(event)">
+                            <label class="btn-grad m-0 mt-1" for="image">Upload</label>
                         </div> <!---department image-->
 
                         <div class="col-12 d-flex justify-content-end">
