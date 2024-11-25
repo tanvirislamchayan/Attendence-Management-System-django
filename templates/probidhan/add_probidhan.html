@@ -5,17 +5,19 @@
 
    <!-- add probidhan section start -->
    <div class="col-md-6 col-sm-12 add-form my-5 mx-auto" data="add-probidhan">
-    <form action="" class="border rounded shadow-sm">
+    {% include "base/message.html" %}
+    <form action="" class="border rounded shadow-sm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <h2 class="w-100 p-2 text-center">Add Probidhan</h2>
         <div class="row p-2">
             <div class="col-12 mb-2">
                 <label for="probidhan">Probidhan <span>*</span></label>
-                <input type="text" name="probidhan" id="probidhan" class="form-control">
+                <input type="number" name="probidhan" id="probidhan" class="form-control">
             </div><!--probidhan-->
 
             <div class="col-12 mb-2">
                 <label for="year">Year <span>*</span></label>
-                <input type="text" name="year" id="year" class="form-control">
+                <input type="number" name="year" id="year" class="form-control">
             </div> <!--publish year-->
 
 
