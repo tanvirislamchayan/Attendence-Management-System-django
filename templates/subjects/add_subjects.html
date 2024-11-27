@@ -4,25 +4,30 @@
 
    <!-- add subject section start -->
    <div class="col-12 add-form p-2" data="add-subject">
+    {% include "base/message.html" %}
     <div class="row">
         <h3 class="text-center col-12 p-2 text-white">Add Subjects</h3>
         <div class="col-md-7 col-sm-12 mx-auto my-5">
-            <form action="" class="border rounded shadow-sm p-2">
+            <form action="" class="border rounded shadow-sm p-2" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-12 mb-2">
-                        <label for="subject_name">Subject Name <span>*</span></label>
-                        <input class="form-control" title="Enter Subject Name" type="text" name="subject_name" id="subject_name" required placeholder="Subject Name">
+                        <label for="name">Subject Name <span>*</span></label>
+                        <input class="form-control" title="Enter Subject Name" type="text" name="name" id="name" required placeholder="Subject Name">
                     </div> <!--subject name-->
 
                     <div class="col-md-6 col-sm-12 mb-2">
                         <label for="subject_code">Subject Code <span>*</span></label>
-                        <input class="form-control" title="Enter Subject Code" type="text" name="subject_name" id="subject_name" required placeholder="Subject Code">
+                        <input class="form-control" title="Enter Subject Code" type="text" name="code" id="code" required placeholder="Subject Code">
                     </div> <!--subject code-->
 
                     <div class="col-md-6 col-sm-12 mb-2">
                         <label for="subject_semester">Semester <span>*</span></label>
                         <select name="subject_semester" id="subject_semester" class="form-control" required>
                             <option value="">Select Semester</option>
+                            {% for sem in semesters %}
+                            <option value="{{sem.id}}">{{ sem.name }}</option>
+                            {% endfor %}
                         </select>
                     </div> <!--subject semester-->
 
@@ -30,6 +35,9 @@
                         <label for="subject_department">Department <span>*</span></label>
                         <select name="subject_department" id="subject_department" class="form-control" required>
                             <option value="">Select Department</option>
+                            {% for dep in departments %}
+                            <option value="{{dep.id}}"> {{dep.name}} </option>
+                            {% endfor %}
                         </select>
                     </div> <!--subject Department-->
 
@@ -37,6 +45,9 @@
                         <label for="subject_probidhan">Probidhan <span>*</span></label>
                         <select name="subject_probidhan" id="subject_probidhan" class="form-control">
                             <option value="">Select Probidhan</option>
+                            {% for pro in probidhans %}
+                            <option value="{{pro.id}}"> {{pro.name}} </option>
+                            {% endfor %}
                         </select>
                     </div> <!--subject Probidhan-->
 
