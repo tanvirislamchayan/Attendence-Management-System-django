@@ -4,16 +4,19 @@
 
    <!-- shift section start -->
    <div class="content p-2" data="shift">
+    {% include "base/message.html" %}
     <div class="row">
         <h2 class="col-12 text-center text-white p-2">Groups/Shifts</h2>
         <div class="col-12 d-flex justify-content-end">
             <a href="{% url 'add_groups' %}" class="btn-grad add-btn" data="add-group">Add Groups</a>
         </div>
+        {% for group in groups %}
         <div class="col-md-3 col-sm-6 p-2 my-2 group-content-section">
             <div>
-                <h2 class="p-0 m-0 bg-transparent">Group A</h2>
+                <h2 class="p-0 m-0 bg-transparent"> {{group.name}} </h2>
             </div>
         </div>
+        {% endfor %}
     </div>
  </div>
 <!-- shift section end -->

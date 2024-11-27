@@ -4,6 +4,7 @@
 
    <!-- subjects section start -->
    <div class="content p-2" data="subjects">
+    {% include "base/message.html" %}
     <div class="row">
         <div class="col-12 mb-2 d-flex justify-content-end">
             <!-- <button data="filter-subject" type="button" class="btn-grad add-btn">Filter Subject</button> -->
@@ -12,18 +13,25 @@
 
         <h2 class="w-100 p-2 text-center">Filter Subjects</h2>
         <div class="col-12 mb-5">
-            <form action="">
+            <form action="" method='post' enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-md-3 col-sm-6 mb-2 form-group">
                         <label for="semester">Semester <span>*</span></label>
                         <select name="semester" id="semester" required class="form-control">
                             <option value="">Select semester</option>
+                            {% for semester in semesters %}
+                            <option value="{{semester.id}}"> {{semester.name}} </option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-2 form-group">
                         <label for="department">Department <span>*</span></label>
                         <select name="department" id="department" required class="form-control">
                             <option value="">Select Department</option>
+                            {% for dep in departments %}
+                            <option value="{{dep.id}}">{{ dep.name }}</option>
+                            {% endfor %}
                         </select>
 
                     </div>
@@ -31,6 +39,9 @@
                         <label for="probidhan">Probidhan <span>*</span></label>
                         <select name="probidhan" id="probidhan" required class="form-control">
                             <option value="">Select Probidhan</option>
+                            {% for pro in probidhans %}
+                            <option value="{{pro.id}}">{{ pro.name }}</option>
+                            {% endfor %}
                         </select>
 
                     </div>
@@ -41,15 +52,24 @@
                 </div>
             </form>
         </div>
-        <h2 class="w-100 p-2 text-center">Subjects for 1st Semester</h2>
+
+        {% if subjects %}
+        <h2 class="w-100 p-2 text-center"> Subjects for {{rec_sem}} Semester </h2>
         <div class="col-md-3 col-sm-6 p-2 subject-content">
+            {% for subject in subjects %}
             <div>
-                <h5>Subject name</h5>
-                <small>Code: 12345</small>
-                <small>Credit: 3</small>
-                <small>Theory: 2</small>
+                <h5> {{subject.name}} </h5>
+                <small class="{% if subject.code %} d-block {% else %} d-none {% endif %}" >Code: {{subject.code}} </small>
+                
+                <small class="{% if subject.credit %} d-block {% else %} d-none {% endif %}" >Credit: {{subject.credit}} </small>
+
+                <small class="{% if subject.theory %} d-block {% else %} d-none {% endif %}" >Theory: {{subject.theory}} </small>
+
+                <small class="{% if subject.practical %} d-block {% else %} d-none {% endif %}" >Practical: {{subject.practical}} </small>
             </div>
+            {% endfor %}
         </div>
+        {% endif %}
     </div>
  </div>
 <!-- subjects section end -->

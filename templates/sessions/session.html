@@ -5,24 +5,20 @@
 
    <!-- seasson Section Start -->
    <div class="content p-2" data="seasson">
+    {% include "base/message.html" %}
     <div class="row">
         <h2 class="p-2 text-center col-12">Session</h2>
         <div class="col-12 d-flex justify-content-end">
             <a href="{% url 'add_sessions' %}" class="btn-grad add-btn">Add Session</a>
         </div>
+        {% for session in sessions %}
         <div class="col-md-3 col-sm-6 p-2 seasson-ceontent">
             <div>
-                <h5>21-22</h5>
-                <small>Starting Year 2021</small>
+                <h5> {{session.name}} </h5>
+                <small>Starting Year {{session.starting_year}} </small>
             </div>
         </div>
-
-        <div class="col-md-3 col-sm-6 p-2 seasson-ceontent">
-            <div>
-                <h5>22-23</h5>
-                <small>Starting Year 2022</small>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 <!-- seasson Section End -->

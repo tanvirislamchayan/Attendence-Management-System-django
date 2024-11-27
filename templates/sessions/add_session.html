@@ -4,23 +4,25 @@
 
    <!-- add seasson section start -->
    <div class="col-md-6 col-sm-12 add-form my-5 mx-auto" data="add-seasson">
-    <form action="" class="border rounded shadow-sm">
+    {% include "base/message.html" %}
+    <form action="" class="border rounded shadow-sm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <h3 class="w-100 p-2">Add Session</h3>
         <div class="row p-2">
             <div class="col-12 mb-2">
-                <label for="seasson">Session <span>*</span></label>
-                <input title="Input Seasson" type="text" name="seasson" id="seasson" class="form-control">
-            </div> <!--Seasson-->
+                <label for="session">Session <span>*</span></label>
+                <input title="Input Session" type="text" name="session" id="session" class="form-control">
+            </div> <!--session-->
 
             <div class="col-12 mb-2">
-                <label for="seasson_start">Session Starting Year <span>*</span></label>
-                <input title="Input Seasson Starting Year" type="text" name="seasson_start" id="seasson_start" class="form-control">
-            </div> <!--seasson starting year-->
+                <label for="session_start">Session Starting Year <span>*</span></label>
+                <input title="Input Session Starting Year" type="text" name="session_start" id="session_start" class="form-control">
+            </div> <!--session starting year-->
 
             <div class="col-12 d-flex justify-content-end">
                 <button type="button" class="cancel-btn">Cancel</button>
                 <button type="submit" class="btn-grad">Add</button>
-            </div> <!--seasson starting year-->
+            </div> <!--session starting year-->
         </div>
     </form>
  </div>

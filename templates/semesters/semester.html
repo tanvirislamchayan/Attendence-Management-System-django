@@ -4,24 +4,20 @@
 
    <!-- Semester section start -->
    <div class="content p-2" data="semester">
+    {% include "base/message.html" %}
     <div class="row">
         <h2 class="p-2 text-center col-12">Semesters</h2>
         <div class="col-12 d-flex justify-content-end">
             <a href="{% url 'add_semesters' %}" class="btn-grad add-btn">Add Semester</a>
         </div>
+        
+        {% for semester in semesters %}
         <div class="col-md-3 col-sm-6 p-2 semester-ceontent">
-            <div>
-                <h5>21-22</h5>
-                <small>Starting Year 2021</small>
+            <div class="p-4">
+                <h4 class="text-center m-0 p-0"> {{semester.name}} </h4>
             </div>
         </div>
-
-        <div class="col-md-3 col-sm-6 p-2 semester-ceontent">
-            <div>
-                <h5>22-23</h5>
-                <small>Starting Year 2022</small>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 <!-- Semester section end -->

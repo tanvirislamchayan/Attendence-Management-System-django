@@ -4,7 +4,9 @@
 
    <!-- add seasson section start -->
    <div class="col-md-6 col-sm-12 add-form my-5 mx-auto" data="add-seasson">
-    <form action="" class="border rounded shadow-sm">
+    {% include "base/message.html" %}
+    <form action="" class="border rounded shadow-sm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <h3 class="w-100 p-2">Add Semesters</h3>
         <div class="row p-2">
             <div class="col-12 mb-2">
