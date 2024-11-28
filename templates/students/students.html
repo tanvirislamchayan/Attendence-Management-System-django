@@ -35,24 +35,34 @@
             <!-- filter students -->
             <div class="col-12 mb-4">
                 <h2 class="w-100 text-center p-2 mt-4">Filter Students</h2>
-                <form action="">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="row">
                         <div class="col-md-3 col-sm-6 mb-2 form-group">
                             <label for="semester">Semester <span>*</span></label>
                             <select name="semester" id="semester" required class="form-control">
                                 <option value="">Select Semester</option>
+                                {% for sem in semesters %}
+                                <option value="{{sem.id}}"> {{sem.name}} </option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col-md-3 col-sm-6 mb-2 form-group">
-                            <label for="semester">Semester <span>*</span></label>
-                            <select name="semester" id="semester" required class="form-control">
-                                <option value="">Select Semester</option>
+                            <label for="department">Department <span>*</span></label>
+                            <select name="department" id="department" required class="form-control">
+                                <option value="">Select Department</option>
+                                {% for dep in departments %}
+                                <option value="{{dep.id}}"> {{dep.name}} </option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col-md-3 col-sm-6 mb-2 form-group">
-                            <label for="semester">Semester <span>*</span></label>
-                            <select name="semester" id="semester" required class="form-control">
-                                <option value="">Select Semester</option>
+                            <label for="probidhan">Prohidhan <span>*</span></label>
+                            <select name="probidhan" id="probidhan" required class="form-control">
+                                <option value="">Select Prohidhan</option>
+                                {% for pro in probidhans %}
+                                <option value="{{pro.id}}"> {{ pro.name }} </option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col-md-3 col-sm-6 mb-2 form-group">
@@ -64,8 +74,9 @@
             </div>
             <!-- filter students -->
 
+            {% if students %}
             <div class="col-12 mt-4">
-                <h2 class="w-100 p-2 text-center text-white">Students of Semester</h2>
+                <h2 class="w-100 p-2 text-center text-white">Students</h2>
 
                 <table class="table table-hover">
                     <thead>
@@ -78,16 +89,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for std in students %}
                         <tr>
-                            <td>1</td>
-                            <td>609554</td>
-                            <td>Tanvir Islam</td>
-                            <td>Computer Science and Technology</td>
-                            <td>6th</td>
+                            <td> {{ forloop.counter }} </td>
+                            <td> {{std.roll}} </td>
+                            <td> {{std.name}} </td>
+                            <td> {{std.department.name}} </td>
+                            <td> {{std.semester.name}} </td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
+            {% else %}
+            <div class="col-12 mt-4">
+                {% include "base/message.html" %}
+            </div>
+            {% endif %}
         </div>
     </div>
  </div>

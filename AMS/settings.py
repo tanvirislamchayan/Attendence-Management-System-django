@@ -51,6 +51,7 @@ EXTERNAL_APPS = [
     'subjects',
     'students',
     'attendances',
+    'import_export'
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS

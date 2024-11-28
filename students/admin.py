@@ -1,8 +1,9 @@
 from django.contrib import admin
 from .models import Student  # Import your Student model
+from import_export.admin import ImportExportActionModelAdmin
 
 
-class StudentAdmin(admin.ModelAdmin):
+class StudentAdmin(ImportExportActionModelAdmin):
     # Fields to display in the admin list view
     list_display = ( 'roll', 'name', 'department', 'semester', 'session')
 
@@ -18,7 +19,7 @@ class StudentAdmin(admin.ModelAdmin):
     # Optional: Organize fields in the form view
     fieldsets = (
         (None, {
-            'fields': ('name', 'roll', 'department', 'probidhan', 'session')
+            'fields': ('name', 'roll', 'department', 'probidhan', 'session', 'semester')
         }),
     )
 

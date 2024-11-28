@@ -4,10 +4,12 @@
 
    <!-- add students section start -->
    <div class="col-12 add-form p-2 " data="add-student">
+    {% include "base/message.html" %}
     <div class="row">
         <h3 class="col-12 p-2 text-center">Add Students</h3>
         <div class="col-md-8 col-sm-12 mx-auto my-3 border shadow-sm p-2">
-            <form action="" class="">
+            <form action="{% url 'add_students_by_form' %}" method="post" enctype="multipart/form-data" class="">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-12 mb-2">
                         <label for="std_name">Full name <span>*</span></label>
@@ -25,32 +27,51 @@
                         <label for="std_department">Department <span>*</span></label>
                         <select name="std_department" id="std_department" class="form-control" required>
                             <option value="">Select Department</option>
+                            {% for dep in departments %}
+                            <option value="{{dep.id}}"> {{dep.name}} </option>
+                            {% endfor %}
                         </select>
                     </div><!--Department-->
                     <div class="col-md-6 col-sm-12 mb-2">
                         <label for="std_seasson">Seasson <span>*</span></label>
                         <select name="std_seasson" id="std_seasson" class="form-control" required>
                             <option value="">Select Seasson</option>
+                            {% for ses in sessions %}
+                            <option value="{{ses.id}}"> {{ses.name}} </option>
+                            {% endfor %}
+
                         </select>
                     </div><!--Seasson-->
                     <div class="col-md-6 col-sm-12 mb-2">
                         <label for="std_shift">Grhoup/Shift <span>*</span></label>
-                        <select name="std_shift" id="std_shift" class="form-control" required>
-                            <option value="">Select Grhoup/Shift</option>
+                        <select required name="std_shift" id="std_shift" class="form-control">
+                            <option value="">Select Group/Shift</option>
+                            {% for grp in groups %}
+                            <option value="{{grp.id}}"> {{grp.name}} </option>
+                            {% endfor %}
                         </select>
+
                     </div><!--Grhoup/Shift-->
 
                     <div class="col-md-6 col-sm-12 mb-2">
-                        <label for="f_semester">Semester <span>*</span></label>
-                        <select name="f_semester" id="f_semester" class="form-control" required>
+                        <label for="std_semester">Semester <span>*</span></label>
+                        <select name="std_semester" id="std_semester" class="form-control" required>
                             <option value="">Select Semester</option>
+                            {% for sem in semesters %}
+                            <option value="{{sem.id}}"> {{sem.name}} </option>
+                            {% endfor %}
+
                         </select>
                     </div><!--semester-->
 
                     <div class="col-md-6 col-sm-12 mb-2">
-                        <label for="f_probidhan">Probidhan <span>*</span></label>
-                        <select name="f_probidhan" id="f_probidhan" class="form-control" required>
+                        <label for="std_probidhan">Probidhan <span>*</span></label>
+                        <select name="std_probidhan" id="std_probidhan" class="form-control" required>
                             <option value="">Select Probidhan</option>
+                            {% for pro in probidhans %}
+                            <option value="{{pro.id}}"> {{pro.name}} </option>
+                            {% endfor %}
+
                         </select>
                     </div><!--Probidhan-->
 
@@ -60,7 +81,8 @@
                 </div>
             </form>
             <hr>
-            <form action="">
+            <form action="{% url 'add_by_xlsx' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <h3 class="w-100 text-center p-2">OR UPLOAD EXCEL</h3>
                 <div class="row">
                     <div class="col-12 mb-2">
