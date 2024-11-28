@@ -5,6 +5,10 @@ from django.http import HttpResponseRedirect
 
 # probidhans
 def probidhans(req):
+    if not req.user.is_authenticated:
+        messages.warning(req, 'Login First!!')
+        return redirect('user_login')
+
     context = {
         'page': 'Probidhans',
         'probidhans': Probidhan.objects.all().order_by('name')

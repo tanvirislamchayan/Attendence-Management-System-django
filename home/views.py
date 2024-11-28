@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from teachers.models import Teacher
 from departments.models import Department
 from semesters.models import Semester
@@ -7,6 +7,7 @@ from probidhans.models import Probidhan
 from groups.models import Group
 from subjects.models import Subject
 from students.models import Student
+from django.contrib import messages
 
 
 # Create your views here.
@@ -16,6 +17,10 @@ def home(request):
     context = {
         'page': 'Dashboard'
     }
+
+    if not request.user.is_authenticated:
+        messages.warning(request, 'Login First!!')
+        return redirect('user_login')
     
     authors = Teacher.objects.filter(is_author = True, is_active=True, is_teacher=True).count()
     teachers = Teacher.objects.filter(is_active=True, is_teacher=True).count()

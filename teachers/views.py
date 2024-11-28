@@ -4,6 +4,7 @@ from .models import Teacher, User, Designation
 from departments.models import Department
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.core.files.storage import default_storage
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 
@@ -175,3 +176,29 @@ def add_teachers(request):
             return redirect(request.path_info)
 
     return render(request, 'teacher/add_teacher.html', context)
+
+# user login
+def user_login(request):
+    context = {
+        'page': "Login"
+    }
+    
+    if request.method == 'POST':
+        # Get the username and password from the POST request
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            # Log the user in
+            login(request, user)
+            messages.success(request, f"Welcome back, {user.username}!")
+            return redirect('home')  # Redirect to the home page or any other page
+        else:
+            # Invalid credentials
+            messages.warning(request, "Invalid username or password. Please try again.")
+            return HttpResponseRedirect(request.path_info)
+    
+    return render(request, 'base/login.html', context)

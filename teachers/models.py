@@ -62,13 +62,13 @@ class Teacher(BaseModel):
             self.short_department = None
 
         # Ensure user's staff status matches `is_active`
-        if self.is_active:
-            self.user.is_staff = True
-        else:
-            self.user.is_staff = False
+        # if self.is_active:
+        #     self.user.is_staff = True
+        # else:
+        #     self.user.is_staff = False
         
         # Save the related user
-        self.user.save()
+        # self.user.save()
         # Check if the instance is being updated (not created)
         if self.pk:
             try:

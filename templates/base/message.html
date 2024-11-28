@@ -1,9 +1,28 @@
+<style>
+    .messages {
+    list-style-position: inside; /* Brings the dot inside the box */
+    padding-left: 0; /* Removes unnecessary padding */
+}
+
+.messages li {
+    margin: 0.5em 0; /* Optional: Adjust spacing between list items */
+}
+</style>
+
 {% if messages %}
-<div class="messages my-2">
+<ul class="messages my-2">
     {% for message in messages %}
-    <div class="text-center container alert alert-{{ message.tags }}">
+    <li class="alert alert-{{ message.tags }}">
         {{ message }}
-    </div>
+    </li>
     {% endfor %}
-</div>
+</ul>
 {% endif %}
+
+<!-- {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="alert alert{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %} -->
