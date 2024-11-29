@@ -72,3 +72,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+
+
+// attendence
+function updateURL() {
+    // Parse existing query parameters
+    const params = new URLSearchParams(window.location.search);
+
+    // Get current dropdown values
+    const department = document.getElementById('department').value;
+    const semester = document.getElementById('sem').value;
+    const subject = document.getElementById('subject').value;
+    const group = document.getElementById('group').value;
+    const date = document.getElementById('date').value;
+
+    // Update or retain existing query parameters
+    if (department) params.set('department', department);
+    if (semester) params.set('semester', semester);
+    if (subject) params.set('subject', subject);
+    if (group) params.set('group', group);
+    if (date) params.set('date', date);
+
+    // Build the updated URL
+    const updatedUrl = `${window.location.pathname}?${params.toString()}`;
+
+    // Redirect to the updated URL
+    window.location.href = updatedUrl;
+}
+
+// Attach onchange event listeners
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('department').addEventListener('change', updateURL);
+    document.getElementById('sem').addEventListener('change', updateURL);
+    document.getElementById('subject').addEventListener('change', updateURL);
+    document.getElementById('group').addEventListener('change', updateURL);
+    document.getElementById('date').addEventListener('change', updateURL);
+});

@@ -24,4 +24,4 @@ class Student(BaseModel):
     group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.roll} - {self.name}"

@@ -13,15 +13,14 @@
 
         <h2 class="w-100 p-2 text-center">Filter Subjects</h2>
         <div class="col-12 mb-5">
-            <form action="" method='post' enctype="multipart/form-data">
-                {% csrf_token %}
+            <form action="" method='get' enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-3 col-sm-6 mb-2 form-group">
                         <label for="semester">Semester <span>*</span></label>
                         <select name="semester" id="semester" required class="form-control">
                             <option value="">Select semester</option>
                             {% for semester in semesters %}
-                            <option value="{{semester.id}}"> {{semester.name}} </option>
+                            <option value="{{semester.slug}}" {% if semester.slug == selected_semester %} selected {% endif %}> {{semester.name}} </option>
                             {% endfor %}
                         </select>
                     </div>
@@ -30,7 +29,7 @@
                         <select name="department" id="department" required class="form-control">
                             <option value="">Select Department</option>
                             {% for dep in departments %}
-                            <option value="{{dep.id}}">{{ dep.name }}</option>
+                            <option value="{{dep.slug}}" {% if dep.slug == selected_department %} selected {% endif %}>{{ dep.name }}</option>
                             {% endfor %}
                         </select>
 
@@ -40,7 +39,7 @@
                         <select name="probidhan" id="probidhan" required class="form-control">
                             <option value="">Select Probidhan</option>
                             {% for pro in probidhans %}
-                            <option value="{{pro.id}}">{{ pro.name }}</option>
+                            <option value="{{pro.slug}}" {% if pro.slug == selected_probidhan %} selected {% endif %} >{{ pro.name }}</option>
                             {% endfor %}
                         </select>
 
@@ -54,7 +53,7 @@
         </div>
 
         {% if subjects %}
-        <h2 class="w-100 p-2 text-center"> Subjects for {{rec_sem}} Semester </h2>
+        <h2 class="w-100 p-2 text-center"> Subjects </h2>
         <div class="col-md-3 col-sm-6 p-2 subject-content">
             {% for subject in subjects %}
             <div>

@@ -7,14 +7,9 @@ from django.urls import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
-# Global variables to hold state
-SUBJECTS = None
-REQ_SEM = None
 
 # Subjects view
 def subjects(req):
-    global SUBJECTS, REQ_SEM
-    print(f'req_sem {REQ_SEM}')
 
     # Context initialization
     context = {
@@ -22,42 +17,28 @@ def subjects(req):
         'semesters': Semester.objects.all().order_by('name'),
         'probidhans': Probidhan.objects.all().order_by('name'),
         'departments': Department.objects.all().order_by('name'),
-        'subjects': None,
-        'rec_sem': None,
     }
 
-    if req.method == 'POST':
-        # Fetch form data from POST request
-        semester = req.POST.get('semester')
-        department = req.POST.get('department')
-        probidhan = req.POST.get('probidhan')
+    selected_department = req.GET.get('department', '')
+    selected_semester = req.GET.get('semester', '')
+    selected_probidhan = req.GET.get('probidhan', '')
 
-        if semester and department and probidhan:
-            REQ_SEM = Semester.objects.get(id=semester)
-            # Store filter data in the session and redirect
-            req.session['subjects_filter'] = {
-                'semester': semester,
-                'department': department,
-                'probidhan': probidhan
-            }
-            return redirect(reverse('subjects'))  # Replace 'subjects' with the name of your URL pattern for this view.
+    subjects = None
 
-    # Handle filter data after redirect
-    filters = req.session.pop('subjects_filter', None)
-    if filters:
-        # Apply filters and update global variables
-        SUBJECTS = Subject.objects.filter(
-            semester=filters['semester'],
-            department=filters['department'],
-            probidhan=filters['probidhan']
-        )
-        context['subjects'] = SUBJECTS
-        context['rec_sem'] = REQ_SEM
-    else:
-        # Use cached values for subjects and semester
-        context['subjects'] = SUBJECTS
-        context['rec_sem'] = REQ_SEM
-    print(context)
+    if selected_department and selected_probidhan and selected_semester:
+        subjects = Subject.objects.filter(
+            department__slug = selected_department,
+            semester__slug = selected_semester,
+            probidhan__slug = selected_probidhan,
+        ).order_by('code')
+
+    context.update({
+        'selected_department': selected_department,
+        'selected_semester': selected_semester,
+        'selected_probidhan': selected_probidhan,
+        'subjects': subjects,
+    })
+
     
 
     return render(req, 'subjects/subjects.html', context)

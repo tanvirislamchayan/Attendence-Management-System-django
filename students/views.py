@@ -13,40 +13,35 @@ from tablib import Dataset
 
 # Create your views here.
 # students
-STUDENTS = None
-def students(req):
-    global STUDENTS
+def students(request):
     context = {
         'page': 'Students',
         'departments': Department.objects.all().order_by('name'),
         'semesters': Semester.objects.all().order_by('name'),
         'probidhans': Probidhan.objects.all().order_by('name'),
-        'students': STUDENTS
     }
 
-    if req.method == 'POST':
-        semester = req.POST.get('semester')
-        department = req.POST.get('department')
-        probidhan = req.POST.get('probidhan')
+    selected_semester = request.GET.get('semester', '')
+    selected_department = request.GET.get('department', '')
+    selected_probidhan = request.GET.get('probidhan', '')
 
-        if semester and department and probidhan:
-            students = Student.objects.filter(
-                department = department,
-                semester = semester,
-                probidhan = probidhan
-            ).order_by('roll')
-            
-            if students: 
-                STUDENTS = students
-                
-            else:
-                STUDENTS = None
-                messages.warning(req, "No students Found!!")
-        
-        return HttpResponseRedirect(req.path_info)
+    students = None
+    if selected_department and selected_probidhan and selected_semester:
+        students = Student.objects.filter(
+            department__slug=selected_department,
+            semester__slug=selected_semester,
+            probidhan__slug=selected_probidhan,
+        ).order_by('roll')
+
+    context.update({
+        'selected_semester': selected_semester,
+        'selected_department': selected_department,
+        'selected_probidhan': selected_probidhan,
+        'students': students
+    })
         
 
-    return render(req, 'students/students.html', context)
+    return render(request, 'students/students.html', context)
 
 def add_students(req):
     context = {

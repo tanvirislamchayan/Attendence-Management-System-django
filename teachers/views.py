@@ -4,7 +4,7 @@ from .models import Teacher, User, Designation
 from departments.models import Department
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.core.files.storage import default_storage
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -144,6 +144,8 @@ def add_teachers(request):
                 email=email,
                 first_name=name
             )
+            user_obj.set_password(password)
+            user_obj.save()
         except Exception as e:
             messages.warning(request, f"Error creating user: {e}")
             return redirect(request.path_info)
@@ -179,6 +181,9 @@ def add_teachers(request):
 
 # user login
 def user_login(request):
+    if request.user.is_authenticated:
+        messages.info(request, f"Hello {request.user.first_name}, You are already logged in !")
+        return redirect('home')
     context = {
         'page': "Login"
     }
@@ -192,13 +197,39 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
-            # Log the user in
-            login(request, user)
-            messages.success(request, f"Welcome back, {user.username}!")
-            return redirect('home')  # Redirect to the home page or any other page
+            # Additional checks for Teacher's status
+            try:
+                if user.teacher.is_active and user.teacher.is_teacher:
+                    login(request, user)  # Log the user in
+                    messages.success(request, f"Welcome back, {user.first_name}!")
+                    return redirect('home')  # Redirect to the home page
+                else:
+                    messages.warning(
+                        request, 
+                        f"{user.first_name}, your account is either inactive or does not have teacher permissions. Please contact the administrator."
+                    )
+            except AttributeError:
+                # Handle the case where the user is not associated with a Teacher
+                messages.warning(
+                    request, 
+                    "You are not authorized to access this system. Please contact the administrator."
+                )
         else:
             # Invalid credentials
             messages.warning(request, "Invalid username or password. Please try again.")
-            return HttpResponseRedirect(request.path_info)
+        
+        return HttpResponseRedirect(request.path_info)
     
     return render(request, 'base/login.html', context)
+
+
+# Logout 
+def user_logout(request):
+    # Log the user out
+    logout(request)
+
+    # Add a success message
+    messages.success(request, "You have been successfully logged out.")
+
+    # Redirect to the login page
+    return redirect('user_login')

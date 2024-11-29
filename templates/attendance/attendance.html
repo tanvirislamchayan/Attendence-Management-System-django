@@ -6,49 +6,76 @@
    <div class="content" data="attendance">
     <div class="row  p-2">
         <h2 class="text-center p-2 border-bottom col-12 mt-1">Student Attendance</h2>
-        <div class="col-md-4 col-sm-6 p-2">
-            <label for="a_teacher">Teacher <span class="required">*</span></label>
-            <div class="form-control">Engr. Manik Ullah</div>
-        </div> <!--Teacher-->
 
-        <div class="col-md-4 col-sm-6 p-2">
-            <label for="a_department">Department <span class="required">*</span></label>
-            <select name="a_department" id="a_department" class="form-control" required>
-                <option value="" checked>Select Department</option>
-                <option value="computer" checked>Computer</option>
-                <option value="civil" checked>Civil</option>
-            </select>
-        </div> <!--Departments-->
-
-        <div class="col-md-4 col-sm-6 p-2">
-            <label for="a_semester">Semester <span class="required">*</span></label>
-            <select name="a_semester" id="a_semester" class="form-control" required>
-                <option value="" checked>Select Semester</option>
-                <option value="1st" checked>1st</option>
-                <option value="2nd" checked>2nd</option>
-            </select>
-        </div> <!--Semester-->
-
-        <div class="col-md-4 col-sm-6 p-2">
-            <label for="a_subject">Subject <span class="required">*</span></label>
-            <select name="a_subject" id="a_subject" class="form-control" required>
-                <option value="" checked>Select Subject</option>
-            </select>
-        </div> <!--subject-->
-
-        <div class="col-md-4 col-sm-6 p-2">
-            <label for="a_date">Date <span class="required">*</span></label>
-            <input type="date" name="a_date" id="a_date" class="form-control"> 
-        </div> <!--date-->
+        <div class="col-md-4 col-sm-6">
+            <label for="teacher">Teacher <span class="required">*</span></label>
+            <div class="form-control"> {{ teacher.user.first_name }} </div>
+        </div>
         
-        <div class="col-md-4 col-sm-6 p-2">
-            <label for="submit-btn" class="invisible">Submit</label>
-            <input type="button" value="Submit" class="form-control bg-primary text-white">
+        <div class="col-md-4 col-sm-6">
+            <label for="department">Department <span class="required">*</span></label>
+            <select name="department" id="department" class="form-control" required>
+                <option value="" checked>Select Department</option>
+                {% for dep in departments %}
+                <option value="{{ dep.slug }}" {% if dep.slug == selected_department %} selected {% elif not selected_department and dep.slug == request.user.teacher.department.slug %} selected {% endif %}>
+                    {{ dep.name }}
+                </option>
+                {% endfor %}
+            </select>
         </div>
 
-        <div class="col-12 student-table">
+        <div class="col-md-4 col-sm-6">
+            <label for="semester">Semester <span class="required">*</span></label>
+            <select name="semester" id="sem" class="form-control" required>
+                <option value="" checked>Select semester</option>
+                {% for sem in semesters %}
+                <option value="{{ sem.slug }}" {% if sem.slug == selected_semester %} selected {% endif %}>
+                    {{ sem.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-6">
+            <label for="subject">Subject <span class="required">*</span></label>
+            <select {% if not subjects %} disabled {% endif %} name="subject" id="subject" class="form-control" required>
+                <option value="" checked>Select Subject</option>
+                {% for sub in subjects %}
+                <option value="{{ sub.slug }}" {% if sub.slug == selected_subject %} selected {% endif %}>
+                    {{ sub.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <label for="group">Group/Shift </label>
+            <select name="group" id="group" class="form-control">
+                <option value="" checked>Select Group/Shift</option>
+                {% for grp in groups %}
+                <option value="{{ grp.slug }}" {% if grp.slug == selected_group %} selected {% endif %}>
+                    {{ grp.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <label for="date">Date <span class="required">*</span></label>
+            <input type="date" name="date" id="date" value="{{ selected_date }}" class="form-control">
+        </div>
+        
+        <script>
+            
+        </script>
+                                
+               
+        {% if students %}
+        <div class="col-12 student-table my-5">
             <div class="table-main" style="overflow-x: auto;">
-                <form action="" class="attendance-table">
+                <form action="" method="post" class="attendance-table">
+                    {% csrf_token %}
                     <table class="table table-hover w-100">
                         <thead >
                             <tr>
@@ -59,22 +86,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for std in students %}
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="present" id="std_id">
+                                    
+                                    <input {% if not selected_subject or not selected_date %} disabled title="Subject and Date required" {% endif %} title="Check for Present" value="{{std.uid}}" type="checkbox" name="present" id="{{std.uid}}">
                                 </td>
-                                <td>189296</td>
-                                <td>Muslima Jahan</td>
-                                <td>Absent</td>
+                                <td> {{ std.roll }} </td>
+                                <td> {{ std.name }} </td>
+                                <td><span> Absent </span></td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="present" id="std_id">
-                                </td>
-                                <td>609554</td>
-                                <td>Tanvir Islam</td>
-                                <td>Absent</td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                     <div class="w-100 d-flex justify-content-end">
@@ -83,6 +105,7 @@
                 </form>
             </div>
         </div><!--student table-->
+        {% endif %}
     </div>
 </div>
 <!-- attendance section end -->

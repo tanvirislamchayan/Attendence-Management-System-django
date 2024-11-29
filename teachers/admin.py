@@ -6,7 +6,7 @@ admin.site.register(Designation)
 
 class TeacherAdmin(admin.ModelAdmin):
     # Add fields to display in the list view
-    list_display = ('user__first_name', 'designation', 'department', 'is_author', 'is_teacher', 'mobile_number')
+    list_display = ('user__first_name', 'designation', 'department', 'is_active', 'is_author', 'is_teacher', 'mobile_number')
 
     # Add filters for various fields
     list_filter = ('designation', 'department', 'is_active', 'is_teacher', 'is_author')

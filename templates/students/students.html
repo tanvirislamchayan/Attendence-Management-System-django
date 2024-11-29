@@ -35,15 +35,16 @@
             <!-- filter students -->
             <div class="col-12 mb-4">
                 <h2 class="w-100 text-center p-2 mt-4">Filter Students</h2>
-                <form action="" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
+                <form action="" method="get">
                     <div class="row">
                         <div class="col-md-3 col-sm-6 mb-2 form-group">
                             <label for="semester">Semester <span>*</span></label>
                             <select name="semester" id="semester" required class="form-control">
                                 <option value="">Select Semester</option>
                                 {% for sem in semesters %}
-                                <option value="{{sem.id}}"> {{sem.name}} </option>
+                                <option value="{{ sem.slug }}" {% if sem.slug == selected_semester %}selected{% endif %}>
+                                    {{ sem.name }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -52,7 +53,9 @@
                             <select name="department" id="department" required class="form-control">
                                 <option value="">Select Department</option>
                                 {% for dep in departments %}
-                                <option value="{{dep.id}}"> {{dep.name}} </option>
+                                <option value="{{ dep.slug }}" {% if dep.slug == selected_department %}selected{% endif %}>
+                                    {{ dep.name }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -61,7 +64,9 @@
                             <select name="probidhan" id="probidhan" required class="form-control">
                                 <option value="">Select Prohidhan</option>
                                 {% for pro in probidhans %}
-                                <option value="{{pro.id}}"> {{ pro.name }} </option>
+                                <option value="{{ pro.slug }}" {% if pro.slug == selected_probidhan %}selected{% endif %}>
+                                    {{ pro.name }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>
