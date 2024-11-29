@@ -128,3 +128,24 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('group').addEventListener('change', updateURL);
     document.getElementById('date').addEventListener('change', updateURL);
 });
+
+
+// attendance checked
+document.addEventListener('DOMContentLoaded', function () {
+    // Add event listener to each row with the class 'selectable-row'
+    document.querySelectorAll('.selectable-row').forEach(function (row) {
+        row.addEventListener('click', function (event) {
+            // Prevent default click behavior on disabled rows
+            if (row.hasAttribute('disabled')) return;
+
+            // Get the checkbox inside this row
+            const checkboxId = row.getAttribute('data-checkbox-id');
+            const checkbox = document.getElementById(checkboxId);
+
+            if (checkbox) {
+                // Toggle the checkbox state
+                checkbox.checked = !checkbox.checked;
+            }
+        });
+    });
+});

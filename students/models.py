@@ -16,7 +16,7 @@ def validate_numeric(value):
 
 class Student(BaseModel):
     name = models.CharField(max_length=50)
-    roll = models.PositiveIntegerField(max_length=10, null=True, blank=True, validators=[validate_numeric])
+    roll = models.PositiveIntegerField(null=True, blank=True, validators=[validate_numeric])
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
     semester = models.ForeignKey(Semester, on_delete=models.SET_NULL, null=True, blank=True)
     session = models.ForeignKey(Session, on_delete=models.SET_NULL, null=True, blank=True)

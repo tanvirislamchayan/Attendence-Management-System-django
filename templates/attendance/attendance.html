@@ -69,6 +69,10 @@
         <script>
             
         </script>
+
+        <div class="col-12 mt-3">
+            {% include "base/message.html" %}
+        </div>
                                 
                
         {% if students %}
@@ -77,32 +81,56 @@
                 <form action="" method="post" class="attendance-table">
                     {% csrf_token %}
                     <table class="table table-hover w-100">
-                        <thead >
+                        <thead>
                             <tr>
                                 <th></th>
                                 <th>Roll</th>
                                 <th>Name</th>
-                                <th>status</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for std in students %}
-                            <tr>
+                            <tr class="selectable-row" data-checkbox-id="{{ std.uid }}"
+                             {% if not selected_subject or not selected_date %} 
+                             title="Subject and Date required"
+                            {% elif attendance_obj and not request.user.teacher.is_author %}
+                             title="Already Exists! You're not allowed to update. Please contact the Administrator." 
+                            {% endif %}>
                                 <td>
-                                    
-                                    <input {% if not selected_subject or not selected_date %} disabled title="Subject and Date required" {% endif %} title="Check for Present" value="{{std.uid}}" type="checkbox" name="present" id="{{std.uid}}">
+                                    <input 
+                                        {% if not selected_subject or not selected_date %} 
+                                            disabled title="Subject and Date required"
+                                        {% elif attendance_obj and not request.user.teacher.is_author %}
+                                            disabled title="Already Exists! You're not allowed to update. Please contact the Administrator." 
+                                        {% endif %} 
+                                        {% if attendance_obj and std in attendance_obj.student_presents.all %} checked {% endif %}
+                                        title="Check for Present" 
+                                        value="{{ std.uid }}" 
+                                        type="checkbox" 
+                                        name="present" 
+                                        id="{{ std.uid }}"
+                                    >
                                 </td>
-                                <td> {{ std.roll }} </td>
-                                <td> {{ std.name }} </td>
-                                <td><span> Absent </span></td>
+                                <td>{{ std.roll }}</td>
+                                <td>{{ std.name }}</td>
+                                <td><span>Absent</span></td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                     <div class="w-100 d-flex justify-content-end">
+                        {% if attendance_obj and request.user.teacher.is_author %}
+                        <button type="submit" class="btn-grad">Update</button>
+                        {% elif not attendance_obj %}
                         <button type="submit" class="btn-grad">Present</button>
+                        {% endif %}
                     </div>
+
                 </form>
+                
+                <script>
+                </script>
             </div>
         </div><!--student table-->
         {% endif %}

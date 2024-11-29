@@ -6,6 +6,8 @@ from semesters.models import Semester
 from subjects.models import Subject
 from students.models import Student
 from groups.models import Group
+from .models import Attendance
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -20,7 +22,6 @@ def attendance(req):
         messages.warning(req, 'You are not authorized to access this page.')
         return redirect('user_login')
 
-    # Retain existing query parameters
     selected_department = req.GET.get('department', '')
     selected_semester = req.GET.get('semester', '')
     selected_subject = req.GET.get('subject', '')
@@ -30,7 +31,6 @@ def attendance(req):
     students = None
     subjects = None
 
-    # Fetch students and subjects if department and semester are selected
     if selected_department and selected_semester:
         student_filter = {
             'department__slug': selected_department,
@@ -45,6 +45,24 @@ def attendance(req):
             semester__slug=selected_semester,
         )
 
+    attendance_obj = None
+    if selected_department and selected_semester and selected_subject and selected_date:        
+        if not selected_group:
+            attendance_obj = Attendance.objects.filter(
+                department__slug = selected_department,
+                semester__slug = selected_semester,
+                subject__slug = selected_subject,
+                date = selected_date,
+            ).first()
+        else:
+            attendance_obj = Attendance.objects.filter(
+                department__slug = selected_department,
+                semester__slug = selected_semester,
+                subject__slug = selected_subject,
+                group__slug = selected_group,
+                date = selected_date,
+            ).first()    
+
     context = {
         'page': 'Attendance',
         'teacher': teacher,
@@ -58,11 +76,94 @@ def attendance(req):
         'selected_group': selected_group,
         'students': students,
         'subjects': subjects,
+        'attendance_obj': attendance_obj,
     }
-    print(context)
+
+    if attendance_obj and not teacher.is_author:  # Ensure proper handling of Attendance object
+        messages.warning(req, f"Exists! You're not allowed to update please contact the Administrator.")
+   
+
+
+    if not attendance_obj and req.method == 'POST':
+        student_list = req.POST.getlist('present')
+        if students and selected_subject and selected_date:
+            try:
+                attendance_obj = Attendance.objects.create(
+                    date=selected_date,
+                    teacher=teacher,
+                    subject=Subject.objects.get(slug=selected_subject),
+                    semester=Semester.objects.get(slug=selected_semester),
+                    department=Department.objects.get(slug=selected_department),
+                    group=Group.objects.get(slug=selected_group) if selected_group else None,
+                )
+
+                present_students = students.filter(uid__in=student_list)
+                absent_students = students.exclude(uid__in=student_list)
+                print(f'present {present_students}')
+                print(f'absent {absent_students}')
+
+                attendance_obj.student_presents.add(*present_students)
+                attendance_obj.student_absents.add(*absent_students)
+                attendance.save()
+
+                # context.update()
+                messages.success(req, "Attendance recorded successfully!")
+                referer_url = req.META.get('HTTP_REFERER', req.path_info)
+                return redirect(referer_url)
+                
+
+            except Exception as e:
+                messages.warning(req, f'Error while creating the entry: {e}')
+                referer_url = req.META.get('HTTP_REFERER', req.path_info)
+                return redirect(referer_url)
+    
+    if attendance_obj and teacher.is_author and req.method == 'POST':
+        student_list = req.POST.getlist('present')
+        present_students = students.filter(uid__in=student_list)
+        absent_students = students.exclude(uid__in=student_list)
+        print(f'present {present_students}')
+        print(f'absent {absent_students}')
+
+        attendance_obj.student_presents.add(*present_students)
+        attendance_obj.student_absents.add(*absent_students)
+        attendance_obj.save()
+
+        messages.info(req, 'Updated Entry Successfully.')
+        referer_url = req.META.get('HTTP_REFERER', req.path_info)
+        return redirect(referer_url)
+
+
 
     return render(req, 'attendance/attendance.html', context)
 
+
+
+
+# check attendance
+def check_attendance(department, semester, subject, date, group):
+    attendance_obj = None
+    if department and semester and subject and date:        
+        if not group:
+            attendance_obj = Attendance.objects.filter(
+                department__slug = department,
+                semester__slug = semester,
+                subject__slug = subject,
+                date = date,
+            ).first()
+        else:
+            attendance_obj = Attendance.objects.filter(
+                department__slug = department,
+                semester__slug = semester,
+                subject__slug = subject,
+                group__slug = group,
+                date = date,
+            ).first()
+    if attendance_obj:
+        print(attendance_obj)
+        return attendance_obj
+    else:
+        print('No attendance')
+        return False
 
 def calculate_attendance(request):
     context = {
