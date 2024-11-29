@@ -88,13 +88,32 @@ function updateURL() {
     const date = document.getElementById('date').value;
 
     // Update or retain existing query parameters
-    if (department) params.set('department', department);
-    if (semester) params.set('semester', semester);
-    if (subject) params.set('subject', subject);
-    if (group) params.set('group', group);
-    if (date) params.set('date', date);
+    if (department) {
+        params.set('department', department);
+    }
+    if (semester) {
+        params.set('semester', semester);
+    } else {
+        params.delete('semester');
+    }
 
-    // Build the updated URL
+    if (subject) {
+        params.set('subject', subject);
+    } else {
+        params.delete('subject');
+    }
+
+    if (group) {
+        params.set('group', group);
+    } else {
+        params.delete('group');
+    }
+
+    if (date) {
+        params.set('date', date);
+    } else {
+        params.delete('date');
+    }    // Build the updated URL
     const updatedUrl = `${window.location.pathname}?${params.toString()}`;
 
     // Redirect to the updated URL
