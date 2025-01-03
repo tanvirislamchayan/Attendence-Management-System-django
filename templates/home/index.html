@@ -7,6 +7,23 @@
     <div class="content p-2" data="dashboard">
         {% include "base/message.html" %}
         <div class="row">
+
+            <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="attendance">
+                <div>
+                    <h5>Attendance</h5>
+                    <small class="invisible">N/A</small>
+                </div>
+            </div>
+    
+            <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="attendance-calculation">
+                <div>
+                    <h5>Summary</h5>
+                    <small class="invisible">N/A</small>
+                </div>
+            </div>
+
+
+            {% if request.user.teacher.is_author %}
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="authors">
                 <div>
                     <h5>Author</h5>
@@ -20,6 +37,8 @@
                     <small> {{ teachers }}&nbsp;{{ teachers|pluralize:"Teacher,Teachers" }}</small>
                 </div>
             </div>
+
+            {% endif %}
     
             <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="departments">
                 <div>
@@ -70,19 +89,6 @@
                 </div>
             </div>
     
-            <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="attendance">
-                <div>
-                    <h5>Attendance</h5>
-                    <small class="invisible">N/A</small>
-                </div>
-            </div>
-    
-            <div class="col-md-3 col-sm-4 p-2 dashboard-content" data="attendance-calculation">
-                <div>
-                    <h5>Attendance Calculation</h5>
-                    <small class="invisible">N/A</small>
-                </div>
-            </div>
         </div>
     </div>
         <!-- Dashboard Section End -->

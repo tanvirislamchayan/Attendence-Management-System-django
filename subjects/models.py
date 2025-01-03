@@ -26,3 +26,5 @@ class Subject(models.Model):
         self.slug = slugify(line)
         return super(Subject, self).save(*args, **kwargs)
     
+    def __str__(self):
+        return self.name

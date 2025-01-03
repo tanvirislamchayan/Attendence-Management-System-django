@@ -91,7 +91,7 @@
                         </thead>
                         <tbody>
                             {% for std in students %}
-                            <tr class="selectable-row" data-checkbox-id="{{ std.uid }}"
+                            <tr class="selectable-row " data-checkbox-id="{{ std.uid }}"
                              {% if not selected_subject or not selected_date %} 
                              title="Subject and Date required"
                             {% elif attendance_obj and not request.user.teacher.is_author %}
@@ -114,7 +114,13 @@
                                 </td>
                                 <td>{{ std.roll }}</td>
                                 <td>{{ std.name }}</td>
-                                <td><span>Absent</span></td>
+                                <td>
+                                    {% if attendance_obj and std in attendance_obj.student_presents.all %}
+                                     <span class="text-white p-2 border bg-success rounded"> Present </span>  
+                                     {% else %}
+                                     <span class="text-white p-2 border bg-danger rounded"> Absent </span>  
+                                     {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

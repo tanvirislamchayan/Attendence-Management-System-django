@@ -28,5 +28,5 @@ class Attendance(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Attendance for {self.subject if self.subject else None}, {self.department.name if self.department else None}, {self.semester.name if self.semester else None} on {self.date if self.date else None}"
+        return f"Attendance for {self.subject.name if self.subject else None}, {self.department.name if self.department else None}, {self.semester.name if self.semester else None} on {self.date if self.date else None}"
 

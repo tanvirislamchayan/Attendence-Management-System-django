@@ -113,6 +113,18 @@ def add_students_by_form(request):
 #     return redirect('add_students')
 
 
+# from django.shortcuts import redirect
+# from django.contrib import messages
+# from tablib import Dataset
+# from students.resources import StudentResource
+# from students.models import Student
+# from departments.models import Department
+# from semesters.models import Semester
+# from sessions.models import Session
+# from probidhans.models import Probidhan
+# from groups.models import Group
+
+
 def add_by_xlsx(request):
     if request.method == 'POST':
         student_resource = StudentResource()
@@ -123,13 +135,14 @@ def add_by_xlsx(request):
         if not students_xlsx.name.endswith('xlsx'):
             messages.warning(request, 'Please import a file with "xlsx" extension !!')
             return HttpResponseRedirect(request.path_info)
-        
+
         # Load the dataset
         std_data = dataset.load(students_xlsx.read(), format='xlsx')
-        print(std_data)  # For debugging purposes
 
         std_exist = []
         std_created = []
+        std_updated = []
+
         # Iterate through each row in the dataset
         for row in std_data.dict:
             try:
@@ -140,7 +153,7 @@ def add_by_xlsx(request):
                 probidhan, _ = Probidhan.objects.get_or_create(name=row['Probidhan'])
                 group, _ = Group.objects.get_or_create(name=row['Group'])
 
-                # Create the Student object, ensuring roll number is unique
+                # Try to get the student by roll
                 student, created = Student.objects.get_or_create(
                     roll=row['Roll'],
                     defaults={
@@ -154,20 +167,52 @@ def add_by_xlsx(request):
                 )
 
                 if created:
-                    std_created.append(str(student.roll))  # Convert to string
+                    std_created.append(str(student.roll))
                     print(f"Student {student.name} created successfully.")
                 else:
-                    std_exist.append(str(student.roll))  # Convert to string
-                    print(f"Student with roll {student.roll} already exists.")
+                    # Check if any field differs from the current student record
+                    fields_updated = []
+                    if student.name != row['Name']:
+                        student.name = row['Name']
+                        fields_updated.append('name')
+
+                    if student.department != department:
+                        student.department = department
+                        fields_updated.append('department')
+
+                    if student.semester != semester:
+                        student.semester = semester
+                        fields_updated.append('semester')
+
+                    if student.session != session:
+                        student.session = session
+                        fields_updated.append('session')
+
+                    if student.probidhan != probidhan:
+                        student.probidhan = probidhan
+                        fields_updated.append('probidhan')
+
+                    if student.group != group:
+                        student.group = group
+                        fields_updated.append('group')
+
+                    if fields_updated:
+                        student.save()
+                        std_updated.append(f"{student.roll} ({', '.join(fields_updated)})")
+                        print(f"Student {student.name} updated successfully: {', '.join(fields_updated)}.")
+                    else:
+                        std_exist.append(str(student.roll))
+                        print(f"Student with roll {student.roll} already exists and matches the data.")
 
             except Exception as e:
                 print(f"Error processing row {row}: {e}")
                 messages.error(request, f"Error processing row {row['Roll']}: {e}")
 
         if std_created:
-            messages.success(request, f"status: \n Student/s with roll/s {', '.join(std_created)} are created successfully.")
-
+            messages.success(request, f"Students created successfully: {', '.join(std_created)}")
+        if std_updated:
+            messages.success(request, f"Students updated successfully: {', '.join(std_updated)}")
         if std_exist:
-            messages.warning(request, f"status: \n Student/s with roll/s {', '.join(std_exist)} already exist.")
+            messages.warning(request, f"Students already exist and match the data: {', '.join(std_exist)}")
 
     return redirect('add_students')

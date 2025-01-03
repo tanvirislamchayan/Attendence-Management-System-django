@@ -17,7 +17,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>IPI | {{ page }}</title>
+    <title>DIMO | {{ page }}</title>
 </head>
   <body>
 
@@ -41,7 +41,7 @@
     <!-- header section start -->
      <header id="header">
         <nav class="navbar navbar-expand-lg navbar-light text-white bg-transparent">
-            <a class="navbar-brand text-white" href="#">IMAGE POLYTECHNIC INSTITUTE</a>
+            <a class="navbar-brand text-white" href="{% url 'home' %}">DIMO</a>
             <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <!-- <span class="navbar-toggler-icon "></span> -->
               <i class="fa-solid fa-bars fa-xl" style="color: #ffffff;"></i>
@@ -53,7 +53,7 @@
                 
               </ul>
               <div class="form-inline my-2 my-lg-0">
-                <a href="{% url 'user_logout' %}" class="btn-grad">Log out</a>
+                <a href="{% url 'user_logout' %}" class="btn btn-outline-danger btn-sm"><i class="fa-sharp-duotone fa-solid fa-right-from-bracket fa-beat"></i> Log out</a>
               </div>
             </div>
           </nav>
@@ -67,53 +67,58 @@
                 <!-- aside section start -->
                  <div class="col-md-2 col-sm-3 p-2 aside">
                   <div class="aside-content">
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'home' %}selected{% endif %}" id="dashboard">
-                        <a class="menuitem" href="{% url 'home' %}">Dashboard</a>
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'home' %}selected{% endif %}" id="dashboard">
+                        <a class="menuitem p-2" href="{% url 'home' %}">Dashboard</a>
+                    </div>
+
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'attendance' %}selected{% endif %}" id="attendance">
+                      <a class="menuitem p-2"  href="{% url 'attendance' %}">Attendance</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'authors' or request.resolver_match.url_name == 'add_authors' %}selected{% endif %}" id="authors">
-                        <a class="menuitem" href="{% url 'authors' %}">Authors</a>
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'calculate_attendance' %}selected{% endif %}" id="attendance-calculation">
+                        <a class="menuitem p-2" href="{% url 'calculate_attendance' %}" title="Attendance Calculation">Summary</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'teachers' or request.resolver_match.url_name == 'add_teachers' %}selected{% endif %}" id="teachers">
-                        <a class="menuitem" href="{% url 'teachers' %}">Teachers</a>
+                    {% if request.user.teacher.is_author %}
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'authors' or request.resolver_match.url_name == 'add_authors' %}selected{% endif %}" id="authors">
+                        <a class="menuitem p-2" href="{% url 'authors' %}">Authors</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'departments' or request.resolver_match.url_name == 'add_departments' %}selected{% endif %}" id="departments">
-                        <a class="menuitem" href="{% url 'departments' %}">Departments</a>
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'teachers' or request.resolver_match.url_name == 'add_teachers' %}selected{% endif %}" id="teachers">
+                        <a class="menuitem p-2" href="{% url 'teachers' %}">Teachers</a>
+                    </div>
+
+                    {% endif %}
+                
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'departments' or request.resolver_match.url_name == 'add_departments' %}selected{% endif %}" id="departments">
+                        <a class="menuitem p-2" href="{% url 'departments' %}">Departments</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'probidhans' or request.resolver_match.url_name == 'add_probidhans' %}selected{% endif %}" id="probidhans">
-                        <a class="menuitem" href="{% url 'probidhans' %}">Probidhans</a>
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'probidhans' or request.resolver_match.url_name == 'add_probidhans' %}selected{% endif %}" id="probidhans">
+                        <a class="menuitem p-2" href="{% url 'probidhans' %}">Probidhans</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'sessions' or request.resolver_match.url_name == 'add_sessions' %}selected{% endif %}" id="sessions">
-                        <a class="menuitem" href="{% url 'sessions' %}">Sessions</a>
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'sessions' or request.resolver_match.url_name == 'add_sessions' %}selected{% endif %}" id="sessions">
+                        <a class="menuitem p-2" href="{% url 'sessions' %}">Sessions</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'semesters' or request.resolver_match.url_name == 'add_semesters' %}selected{% endif %}" id="semester">
-                        <a class="menuitem" href="{% url 'semesters' %}">Semesters</a>
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'semesters' or request.resolver_match.url_name == 'add_semesters' %}selected{% endif %}" id="semester">
+                        <a class="menuitem p-2" href="{% url 'semesters' %}">Semesters</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'groups' or request.resolver_match.url_name == 'add_groups' %}selected{% endif %}" id="shift">
-                        <a class="menuitem" href="{% url 'groups' %}">Group/Shift</a>
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'groups' or request.resolver_match.url_name == 'add_groups' %}selected{% endif %}" id="shift">
+                        <a class="menuitem p-2" href="{% url 'groups' %}">Group/Shift</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'subjects' or request.resolver_match.url_name == 'add_subjects' %}selected{% endif %}" id="subjects">
-                        <a class="menuitem" href="{% url 'subjects' %}">Subjects</a>
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'subjects' or request.resolver_match.url_name == 'add_subjects' %}selected{% endif %}" id="subjects">
+                        <a class="menuitem p-2" href="{% url 'subjects' %}">Subjects</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'students' or request.resolver_match.url_name == 'add_students' %}selected{% endif %}" id="student">
-                        <a class="menuitem" href="{% url 'students' %}">Students</a>
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'students' or request.resolver_match.url_name == 'add_students' %}selected{% endif %}" id="student">
+                        <a class="menuitem p-2" href="{% url 'students' %}">Students</a>
                     </div>
                 
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'attendance' %}selected{% endif %}" id="attendance">
-                        <a class="menuitem" href="{% url 'attendance' %}">Attendance</a>
-                    </div>
-                
-                    <div class="aside-menu p-2 m-0 {% if request.resolver_match.url_name == 'calculate_attendance' %}selected{% endif %}" id="attendance-calculation">
-                        <a class="menuitem" href="{% url 'calculate_attendance' %}" title="Attendance Calculation">Calculation</a>
-                    </div>
+
                 </div>
                                 
                  </div>

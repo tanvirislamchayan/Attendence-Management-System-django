@@ -102,9 +102,10 @@ def attendance(req):
                 print(f'present {present_students}')
                 print(f'absent {absent_students}')
 
+
                 attendance_obj.student_presents.add(*present_students)
                 attendance_obj.student_absents.add(*absent_students)
-                attendance.save()
+                # attendance.save()
 
                 # context.update()
                 messages.success(req, "Attendance recorded successfully!")
@@ -124,9 +125,12 @@ def attendance(req):
         print(f'present {present_students}')
         print(f'absent {absent_students}')
 
+        attendance_obj.student_presents.clear()
+        attendance_obj.student_absents.clear()
+
         attendance_obj.student_presents.add(*present_students)
         attendance_obj.student_absents.add(*absent_students)
-        attendance_obj.save()
+        # attendance_obj.save()
 
         messages.info(req, 'Updated Entry Successfully.')
         referer_url = req.META.get('HTTP_REFERER', req.path_info)
@@ -165,8 +169,70 @@ def check_attendance(department, semester, subject, date, group):
         print('No attendance')
         return False
 
+from django.db.models import Q
+
 def calculate_attendance(request):
+    departments = Department.objects.all()
+    semesters = Semester.objects.all()
     context = {
-        'page': 'Attendance Calculation'
+        'page': 'Attendance Summary',
+        'departments': departments,
+        'semesters': semesters,
     }
+    if request.method == 'POST':
+        cal_type = request.POST.get('cal_type')
+        if cal_type == 'day':
+            d_department = request.POST.get('d_department', '') 
+            d_semester = request.POST.get('d_semester', '') 
+            d_date = request.POST.get('d_date', '') 
+
+            attendance_data = calculate_day(d_department, d_semester, d_date)
+            request.session['d_date'] = d_date
+            request.session['d_semester'] = d_semester
+            request.session['d_department'] = d_department
+            request.session['attendance_summary'] = attendance_data
+
+        referer_url = request.META.get('HTTP_REFERER', request.path_info)
+        return redirect(referer_url)
+
+    # Retrieve data from session
+    if 'attendance_summary' in request.session:
+        context.update({
+            'attendance_summary': request.session.pop('attendance_summary'),
+            'sel_dep': request.session.pop('d_department'),
+            'sel_sem': request.session.pop('d_semester'),
+            'sel_date': request.session.pop('d_date'),
+        })
+        print(context)
+
     return render(request, 'attendance/atd_calculation.html', context)
+
+
+def calculate_day(d_department, d_semester, d_date):
+    department_obj = Department.objects.get(id=d_department)
+    semester_obj = Semester.objects.get(id=d_semester)
+    students = Student.objects.filter(department=department_obj, semester=semester_obj)
+    
+    # Attendance on the specific date
+    get_attendances = Attendance.objects.filter(department=department_obj, date=d_date, semester=semester_obj)
+    
+    # Calculate attendance percentages
+    attendance_summary = []
+    for student in students:
+        total_classes = Attendance.objects.filter(department=department_obj, semester=semester_obj).count()
+        present_count = Attendance.objects.filter(
+            department=department_obj,
+            semester=semester_obj,
+            student_presents=student
+        ).count()
+        percentage = (present_count / total_classes * 100) if total_classes > 0 else 0
+        attendance_summary.append({
+            # 'student_id': student.id,
+            'student_roll': student.roll,
+            'student_name': student.name,
+            'total_classes': total_classes,
+            'present_count': present_count,
+            'percentage': round(percentage, 2),
+        })
+
+    return attendance_summary

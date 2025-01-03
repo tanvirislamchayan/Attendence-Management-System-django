@@ -25,33 +25,44 @@
         <!-- calculate day section start -->
         <div class="calc-result d-none col-12 my-3" data="cal-date">
             <div class="row">
-                <h3 class="col-12 p-2 text-center">Date Calculation</h3>
-                <form action="" class="w-100 mb-3">
+
+                <form action="" class="w-100 mb-3" method="post">
+                    {% csrf_token %}
                     <div class="row">
+                        <input type="hidden" name="cal_type" value="day">
                         <div class="col-md-3 col-sm-6 form-group ">
                             <label for="d_department">Department <span>*</span></label>
                             <select required name="d_department" id="d_department" class="form-control">
                                 <option value="">Select Department</option>
+                                {% for dep in departments %}
+                                <option value="{{ dep.id }}" {% if sel_dep|stringformat:"s" == dep.id|stringformat:"s" %} selected {% endif %}>{{ dep.name }}</option>
+                                {% endfor %}
                             </select> 
                         </div><!--Department-->
+                
                         <div class="col-md-3 col-sm-6 form-group ">
                             <label for="d_semester">Semester <span>*</span></label>
                             <select required name="d_semester" id="d_semester" class="form-control">
                                 <option value="">Select Semester</option>
+                                {% for sem in semesters %}
+                                <option value="{{ sem.id }}" {% if sel_sem|stringformat:"s" == sem.id|stringformat:"s" %} selected {% endif %}>{{ sem.name }}</option>
+                                {% endfor %}
                             </select> 
                         </div><!--Semester-->
+                
                         <div class="col-md-3 col-sm-6 form-group ">
                             <label for="d_date">Date <span>*</span></label>
-                            <select required name="d_date" id="d_date" class="form-control">
-                                <option value="">Select Date</option>
-                            </select> 
+                            <input required class="form-control" type="date" name="d_date" id="d_date" value="{{ sel_date }}">
                         </div><!--Date-->
+                
                         <div class="col-md-3 col-sm-6 form-group ">
-                           <label for="submit" class="invisible">Submit</label>
-                           <input type="submit" value="Submit" class="bg-primary text-white form-control">
+                            <label for="submit" class="invisible">Submit</label>
+                            <input type="submit" value="Submit" class=" btn btn-outline-primary form-control">
                         </div><!--button-->
                     </div>
-                </form> <!--Calculation form-->
+                </form>
+                
+                 <!--Calculation form-->
             </div>
         </div>
         <!-- calculate day section end -->
@@ -131,23 +142,86 @@
         </div>
         <!-- calculate semester section end -->
 
+
         <div class="col-12 my-5">
+            {% if attendance_summary %}
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>#Sr.</th>
                         <th>Roll</th>
                         <th>Name</th>
-                        <th class="text-end">Total Attendance (%)</th>
+                        <th class="text-right">Total Classes</th>
+                        <th class="text-right">Present Count</th>
+                        <th>Total Attendance (%)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>189296</td>
-                        <td>Muslima Jahan</td>
-                        <td class="text-end">92%</td>
-                    </tr>
+                    {% for item in attendance_summary %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ item.student_roll }}</td>  <!-- Accessing 'student_roll' instead of 'student.roll' -->
+                            <td>{{ item.student_name }}</td>  <!-- Accessing 'student_name' instead of 'student.name' -->
+                            <td class="text-right">{{ item.total_classes }}</td>
+                            <td class="text-right">{{ item.present_count }}</td>
+                            <td>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar" role="progressbar" data-percentage="{{ item.percentage }}" style="width: {{ item.percentage }}%;" aria-valuenow="{{ item.percentage }}" aria-valuemin="0" aria-valuemax="100">
+                                        <strong style="text-shadow: 2px 2px 15px black;">{{ item.percentage }}%</strong>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+        {% else %}
+            
+        <h4  class="text-center col-12 btn btn-outline-danger"> NO ATTENDANCE DATA AVAILABLE </h4>
+        
+        {% endif %}
+        
+        
+            
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const progressBars = document.querySelectorAll(".progress-bar");
+                    const animationDuration = 500; // 2 seconds (2000 ms)
+                    const frameRate = 10; // Frames per second
+                    const frameTime = 100 / frameRate; // Time per frame in ms
+                    const totalFrames = animationDuration / frameTime; // Total frames for the animation
+            
+                    progressBars.forEach(bar => {
+                        const targetPercentage = parseInt(bar.getAttribute("data-percentage"), 10);
+                        let currentPercentage = 0;
+                        const increment = targetPercentage / totalFrames; // Increment per frame
+            
+                        const interval = setInterval(() => {
+                            currentPercentage += increment;
+                            if (currentPercentage >= targetPercentage) {
+                                currentPercentage = targetPercentage;
+                                clearInterval(interval);
+                            }
+            
+                            // Update progress bar width and percentage text
+                            bar.style.width = `${currentPercentage}%`;
+                            bar.innerHTML = `<strong style="text-shadow: 2px 2px 15px black;">${Math.floor(currentPercentage)}%</strong>`;
+            
+                            // Dynamically update the progress bar color
+                            bar.classList.remove("bg-primary", "bg-warning", "bg-danger");
+                            if (currentPercentage >= 95) {
+                                bar.classList.add("bg-primary"); // Normal color
+                            } else if (currentPercentage >= 80) {
+                                bar.classList.add("bg-warning"); // Warning color
+                            } else {
+                                bar.classList.add("bg-danger"); // Danger color
+                            }
+                        }, frameTime);
+                    });
+                });
+            </script>
+            
+            
         </div>
 
 

@@ -87,3 +87,6 @@ class Teacher(BaseModel):
         if self.image:
             self.image.delete(save=False)
         return super().delete(*args, **kwargs)
+    
+    def __str__(self):
+        return self.user.first_name
