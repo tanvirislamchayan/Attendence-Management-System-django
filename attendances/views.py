@@ -8,6 +8,9 @@ from students.models import Student
 from groups.models import Group
 from .models import Attendance
 from django.http import HttpResponseRedirect
+from datetime import datetime
+from calendar import monthrange
+from django.db.models import Q
 
 # Create your views here.
 
@@ -169,16 +172,22 @@ def check_attendance(department, semester, subject, date, group):
         print('No attendance')
         return False
 
-from django.db.models import Q
 
 def calculate_attendance(request):
     departments = Department.objects.all()
     semesters = Semester.objects.all()
+    months = []
+    attendance_objs = Attendance.objects.all().order_by('-id')
+    for obj in attendance_objs:
+        if not obj.month in months:
+            months.append(obj.month)
     context = {
         'page': 'Attendance Summary',
         'departments': departments,
         'semesters': semesters,
+        'months': months,
     }
+    attendance_data = None
     if request.method == 'POST':
         cal_type = request.POST.get('cal_type')
         if cal_type == 'day':
@@ -191,6 +200,35 @@ def calculate_attendance(request):
             request.session['d_semester'] = d_semester
             request.session['d_department'] = d_department
             request.session['attendance_summary'] = attendance_data
+        
+        elif cal_type == 'month':
+            m_department = request.POST.get('m_department', '')
+            m_semester = request.POST.get('m_semester', '')
+            m_month = request.POST.get('m_month', '')
+
+            attendance_data = calculate_month(m_department, m_semester, m_month)
+            request.session['m_month'] = m_month
+            request.session['m_semester'] = m_semester
+            request.session['m_department'] = m_department
+            request.session['attendance_summary'] = attendance_data
+
+        elif cal_type == 'semester':
+            s_department = request.POST.get('s_department', '')
+            s_semester = request.POST.get('s_semester', '')
+            s_month_start = request.POST.get('s_month_start', '')
+            s_month_end = request.POST.get('s_month_end', '')
+
+            attendance_data = calculate_semester(s_department, s_semester, s_month_start, s_month_end)
+            if "error" in attendance_data:
+                messages.warning(request, attendance_data["error"])
+                return redirect(request.META.get('HTTP_REFERER', request.path_info))
+
+            request.session['s_month_start'] = s_month_start
+            request.session['s_month_end'] = s_month_end
+            request.session['s_department'] = s_department
+            request.session['s_semester'] = s_semester
+            request.session['attendance_summary'] = attendance_data
+
 
         referer_url = request.META.get('HTTP_REFERER', request.path_info)
         return redirect(referer_url)
@@ -199,11 +237,39 @@ def calculate_attendance(request):
     if 'attendance_summary' in request.session:
         context.update({
             'attendance_summary': request.session.pop('attendance_summary'),
-            'sel_dep': request.session.pop('d_department'),
-            'sel_sem': request.session.pop('d_semester'),
-            'sel_date': request.session.pop('d_date'),
         })
-        print(context)
+        if 'd_date' in request.session:
+            # Day-wise attendance
+            context.update({
+                'sel_dep': request.session.pop('d_department'),
+                'sel_sem': request.session.pop('d_semester'),
+                'sel_date': request.session.pop('d_date'),
+            })
+        elif 'm_month' in request.session:
+            # Month-wise attendance
+            context.update({
+                'sel_dep': request.session.pop('m_department'),
+                'sel_sem': request.session.pop('m_semester'),
+                'sel_month': request.session.pop('m_month'),
+            })
+        elif 's_month_start' in request.session and 's_month_end' in request.session:
+            # Semester-wise attendance
+            context.update({
+                'sel_dep': request.session.pop('s_department'),
+                'sel_sem': request.session.pop('s_semester'),
+                'sel_month_start': request.session.pop('s_month_start'),
+                'sel_month_end': request.session.pop('s_month_end'),
+            })
+
+    if 'sel_dep' and 'sel_sem' in context:
+        sel_dep = context.get('sel_dep')
+        sel_sem = context.get('sel_sem')
+        sel_dep_name = Department.objects.get(id=sel_dep)
+        sell_sem_name = Semester.objects.get(id=sel_sem)
+        context.update({
+            'sel_dep_name': sel_dep_name,
+            'sell_sem_name': sell_sem_name,
+        })
 
     return render(request, 'attendance/atd_calculation.html', context)
 
@@ -228,6 +294,81 @@ def calculate_day(d_department, d_semester, d_date):
         percentage = (present_count / total_classes * 100) if total_classes > 0 else 0
         attendance_summary.append({
             # 'student_id': student.id,
+            'student_roll': student.roll,
+            'student_name': student.name,
+            'total_classes': total_classes,
+            'present_count': present_count,
+            'percentage': round(percentage, 2),
+        })
+
+    return attendance_summary
+
+
+def calculate_month(m_department, m_semester, m_month):
+    department_obj = Department.objects.get(id=m_department)
+    semester_obj = Semester.objects.get(id=m_semester)
+    students = Student.objects.filter(department=department_obj, semester=semester_obj)
+
+    # Attendance records for the given month
+    month_attendances = Attendance.objects.filter(department=department_obj, semester=semester_obj, month=m_month)
+
+    # Calculate attendance summary for the month
+    attendance_summary = []
+    for student in students:
+        total_classes = month_attendances.count()
+        present_count = month_attendances.filter(student_presents=student).count()
+        percentage = (present_count / total_classes * 100) if total_classes > 0 else 0
+        attendance_summary.append({
+            'student_roll': student.roll,
+            'student_name': student.name,
+            'total_classes': total_classes,
+            'present_count': present_count,
+            'percentage': round(percentage, 2),
+        })
+
+    return attendance_summary
+
+
+def calculate_semester(s_department, s_semester, s_month_start, s_month_end):
+    # Validate and parse input months
+    try:
+        start_date = datetime.strptime(s_month_start, "%B - %Y")
+        end_date = datetime.strptime(s_month_end, "%B - %Y")
+    except ValueError:
+        return {"error": "Invalid date format. Please use 'Month - Year'."}
+
+    # Validate date range
+    if start_date > end_date:
+        return {"error": "Start month cannot be greater than the end month."}
+
+    # Determine the first and last day of the date range
+    first_day = datetime(start_date.year, start_date.month, 1)
+    last_day = datetime(end_date.year, end_date.month, monthrange(end_date.year, end_date.month)[1])
+
+    # Get department and semester objects
+    department_obj = Department.objects.get(id=s_department)
+    semester_obj = Semester.objects.get(id=s_semester)
+    students = Student.objects.filter(department=department_obj, semester=semester_obj)
+
+    # Attendance records within the range
+    semester_attendances = Attendance.objects.filter(
+        department=department_obj,
+        semester=semester_obj,
+        date__gte=first_day,
+        date__lte=last_day
+    )
+
+    # Debug: Log total attendance records
+    print(f"Total attendance records found: {semester_attendances.count()}")
+
+    # Calculate attendance summary
+    attendance_summary = []
+    for student in students:
+        total_classes = semester_attendances.count()
+        present_count = semester_attendances.filter(student_presents=student).count()
+        percentage = (present_count / total_classes * 100) if total_classes > 0 else 0
+
+        attendance_summary.append({
             'student_roll': student.roll,
             'student_name': student.name,
             'total_classes': total_classes,

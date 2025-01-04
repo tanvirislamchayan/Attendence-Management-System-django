@@ -2,6 +2,58 @@
 {% load static %}
 {% block start %}
 
+<style>
+    /* Style for the table */
+    #pdfXlTable {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+        text-align: left;
+    }
+
+    /* Table headers */
+    #pdfXlTable th {
+        background-color: #0078C8; /* Dark blue background */
+        color: white; /* White text */
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    /* Table cells */
+    #pdfXlTable td {
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+
+    /* Right-aligned cells */
+    #pdfXlTable td.text-right {
+        text-align: right;
+    }
+
+    /* Alternate row colors */
+    #pdfXlTable tr:nth-child(even) {
+        background-color: #f9f9f9; /* Light grey */
+    }
+
+    #pdfXlTable tr:nth-child(odd) {
+        background-color: #ffffff; /* White */
+    }
+
+    /* Hover effect for rows */
+    #pdfXlTable tr:hover {
+        background-color: #f1f1f1; /* Light grey on hover */
+    }
+
+    /* Table container (optional for responsive design) */
+    .table-container {
+        overflow-x: auto; /* Horizontal scroll for small screens */
+    }
+</style>
+
+
    <!-- attendance calculation section start -->
    <div class="content" data="attendance-calculation">
     <div class="row p-2">
@@ -72,29 +124,40 @@
         <div class="calc-result d-none col-12 my-3" data="cal-month">
             <div class="row">
                 <h3 class="col-12 p-2 text-center">Month Calculation</h3>
-                <form action="" class="w-100 mb-3">
+                <form action="" class="w-100 mb-3" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="cal_type" value="month">
                     <div class="row">
                         <div class="col-md-3 col-sm-6 form-group">
                             <label for="m_department">Department <span>*</span></label>
                             <select required name="m_department" id="m_department" class="form-control">
-                                <option value="">Select Department</option>
+                                <option  value="">Select Department</option>
+                                {% for dep in departments %}
+                                <option  value="{{ dep.id }}" {% if sel_dep|stringformat:"s" == dep.id|stringformat:"s" %} selected {% endif %}> {{dep.name}} </option>
+                                {% endfor %}
                             </select> 
                         </div><!--Department-->
                         <div class="col-md-3 col-sm-6 form-group">
                             <label for="m_semester">Semester <span>*</span></label>
                             <select required name="m_semester" id="m_semester" class="form-control">
                                 <option value="">Select Semester</option>
+                                {% for sem in semesters %}
+                                <option value="{{ sem.id }}" {% if sel_sem|stringformat:"s" == sem.id|stringformat:"s" %} selected {% endif %}> {{ sem.name }} </option>
+                                {% endfor %}
                             </select> 
                         </div><!--Semester-->
                         <div class="col-md-3 col-sm-6 form-group">
                             <label for="m_month">Month <span>*</span></label>
                             <select required name="m_month" id="m_month" class="form-control">
                                 <option value="">Select Month</option>
+                                {% for month in months %}
+                                <option {% if sel_month == month %} selected {% endif %} value="{{ month }}"> {{ month }} </option>
+                                {% endfor %}
                             </select> 
                         </div><!--Month-->
                         <div class="col-md-3 col-sm-6 form-group">
                            <label for="submit" class="invisible">Submit</label>
-                           <input type="submit" value="Submit" class="bg-primary text-white form-control">
+                           <input type="submit" value="Submit" class="btn btn-outline-primary form-control">
                         </div><!--button-->
                     </div>
                 </form> <!--Calculation form-->
@@ -106,35 +169,54 @@
         <div class="calc-result d-none col-12 my-3" data="cal-semester">
             <div class="row">
                 <h3 class="col-12 p-2 text-center">Semester Calculation</h3>
-                <form action="" class="w-100 mb-3">
+                <form action="" class="w-100 mb-3" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="cal_type" value="semester">
+
                     <div class="row">
                         <div class="col-md-6 col-sm-6 form-group">
                             <label for="s_department">Department <span>*</span></label>
                             <select required name="s_department" id="s_department" class="form-control">
                                 <option value="">Select Department</option>
+                                {% for dep in departments %}
+                                <option  value="{{ dep.id }}" {% if sel_dep|stringformat:"s" == dep.id|stringformat:"s" %} selected {% endif %}> {{dep.name}} </option>
+                                {% endfor %}
+
                             </select> 
                         </div><!--Department-->
                         <div class="col-md-6 col-sm-6 form-group">
                             <label for="s_semester">Semester <span>*</span></label>
                             <select required name="s_semester" id="s_semester" class="form-control">
                                 <option value="">Select Semester</option>
+                                {% for sem in semesters %}
+                                <option value="{{ sem.id }}" {% if sel_sem|stringformat:"s" == sem.id|stringformat:"s" %} selected {% endif %}> {{ sem.name }} </option>
+                                {% endfor %}
+
                             </select> 
                         </div><!--Semester-->
                         <div class="col-md-4 col-sm-6 form-group">
                             <label for="s_month_start">Month start <span>*</span></label>
                             <select required name="s_month_start" id="s_month_start" class="form-control">
                                 <option value="">Select Month start</option>
+                                {% for month in months %}
+                                <option {% if sel_month_start == month %} selected {% endif %} value="{{ month }}"> {{ month }} </option>
+                                {% endfor %}
+
                             </select> 
                         </div><!--Month start-->
                         <div class="col-md-4 col-sm-6 form-group">
                             <label for="s_month_end">Month End <span>*</span></label>
                             <select required name="s_month_end" id="s_month_end" class="form-control">
                                 <option value="">Select Month End</option>
+                                {% for month in months %}
+                                <option {% if sel_month_end == month %} selected {% endif %} value="{{ month }}"> {{ month }} </option>
+                                {% endfor %}
+
                             </select> 
                         </div><!--Month End-->
                         <div class="col-md-4 col-sm-6 form-group">
                            <label for="submit" class="invisible">Submit</label>
-                           <input type="submit" value="Submit" class="bg-primary text-white form-control">
+                           <input type="submit" value="Submit" class="btn btn-outline-primary form-control">
                         </div><!--button-->
                     </div>
                 </form> <!--Calculation form-->
@@ -143,9 +225,37 @@
         </div>
         <!-- calculate semester section end -->
 
+        {% include "base/message.html" %}
+        <!-- pdf and excel button -->
+        {% if attendance_summary %}
 
-        <div class="col-12 my-5">
-            {% if attendance_summary %}
+        <div class="col-6 my-2 text-left p-2">
+            
+            Summary Report of: 
+            <strong id="reportName" style="border-bottom:1px solid black" class="pb-1">
+                {% if sel_date %}
+                    {{ sel_date }}
+                {% elif sel_month %}
+                    {{ sel_month }}
+                {% elif sel_month_start and sel_month_end %}
+                    {{ sel_month_start }} to {{ sel_month_end }}
+                {% endif %}
+            </strong>
+            
+            
+        </div>
+
+         <div class="col-6 my-2 text-right">
+            <button id="btnPdf" type="button" class="btn btn-warning btn-sm me-1">
+                <i class="fa-solid fa-print"></i> PDF
+            </button>
+            <button id="btnXl" type="button" class="btn btn-info btn-sm me-1">
+                <i class="fa-solid fa-print"></i> EXCEL
+            </button>
+         </div>
+
+        <div class="col-12 mt-0 mb-5">
+            
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -176,54 +286,227 @@
                     {% endfor %}
                 </tbody>
             </table>
-        {% else %}
+
+            <div id="reportDiv" class="table-container d-none">
+                <h3 class="text-center">Image Polytechnic Institute</h3>
+                <div class="w-100 my-2 p-2 d-flex justify-content-between">
+                    <div id="reportName" class="text-left">
+                        Summary Report of: 
+                        <strong style="border-bottom:1px solid black" class="pb-1">
+                            {% if sel_date %}
+                                {{ sel_date }}
+                            {% elif sel_month %}
+                                {{ sel_month }}
+                            {% elif sel_month_start and sel_month_end %}
+                                {{ sel_month_start }} to {{ sel_month_end }}
+                            {% endif %}
+                        </strong>
+                    </div>
+                    <div class="text-write">
+                        {{sel_dep_name}}, {{sell_sem_name}}
+                    </div>
+                    
+                </div>
+                <table id="pdfXlTable" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#Sr.</th>
+                            <th>Roll</th>
+                            <th>Name</th>
+                            <th class="text-right">Classes</th>
+                            <th class="text-right">Presents</th>
+                            <th>Attendance (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in attendance_summary %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ item.student_roll }}</td>
+                                <td>{{ item.student_name }}</td>
+                                <td class="text-right">{{ item.total_classes }}</td>
+                                <td class="text-right">{{ item.present_count }}</td>
+                                <td class="text-right">{{ item.percentage }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                    {% else %}
             
-        <h4  class="text-center col-12 btn btn-outline-danger"> NO ATTENDANCE DATA AVAILABLE </h4>
-        
-        {% endif %}
-        
-        
-            
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const progressBars = document.querySelectorAll(".progress-bar");
-                    const animationDuration = 500; // 2 seconds (2000 ms)
-                    const frameRate = 10; // Frames per second
-                    const frameTime = 100 / frameRate; // Time per frame in ms
-                    const totalFrames = animationDuration / frameTime; // Total frames for the animation
-            
-                    progressBars.forEach(bar => {
-                        const targetPercentage = parseInt(bar.getAttribute("data-percentage"), 10);
-                        let currentPercentage = 0;
-                        const increment = targetPercentage / totalFrames; // Increment per frame
-            
-                        const interval = setInterval(() => {
-                            currentPercentage += increment;
-                            if (currentPercentage >= targetPercentage) {
-                                currentPercentage = targetPercentage;
-                                clearInterval(interval);
-                            }
-            
-                            // Update progress bar width and percentage text
-                            bar.style.width = `${currentPercentage}%`;
-                            bar.innerHTML = `<strong style="text-shadow: 2px 2px 15px black;">${Math.floor(currentPercentage)}%</strong>`;
-            
-                            // Dynamically update the progress bar color
-                            bar.classList.remove("bg-primary", "bg-warning", "bg-danger");
-                            if (currentPercentage >= 95) {
-                                bar.classList.add("bg-primary"); // Normal color
-                            } else if (currentPercentage >= 80) {
-                                bar.classList.add("bg-warning"); // Warning color
-                            } else {
-                                bar.classList.add("bg-danger"); // Danger color
-                            }
-                        }, frameTime);
-                    });
-                });
-            </script>
-            
-            
+            <h4  class="text-center col-12 btn btn-outline-danger my-2"> NO ATTENDANCE DATA AVAILABLE </h4>
         </div>
+        {% endif %}
+
+             <!-- Add jspdf and SheetJS (xlsx) libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+       
+        <script>
+            const reportName = document.getElementById('reportName').innerText
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const progressBars = document.querySelectorAll(".progress-bar");
+                const animationDuration = 500; // 2 seconds (2000 ms)
+                const frameRate = 10; // Frames per second
+                const frameTime = 100 / frameRate; // Time per frame in ms
+                const totalFrames = animationDuration / frameTime; // Total frames for the animation
+        
+                progressBars.forEach(bar => {
+                    const targetPercentage = parseInt(bar.getAttribute("data-percentage"), 10);
+                    let currentPercentage = 0;
+                    const increment = targetPercentage / totalFrames; // Increment per frame
+        
+                    const interval = setInterval(() => {
+                        currentPercentage += increment;
+                        if (currentPercentage >= targetPercentage) {
+                            currentPercentage = targetPercentage;
+                            clearInterval(interval);
+                        }
+        
+                        // Update progress bar width and percentage text
+                        bar.style.width = `${currentPercentage}%`;
+                        bar.innerHTML = `<strong style="text-shadow: 2px 2px 15px black;">${Math.floor(currentPercentage)}%</strong>`;
+        
+                        // Dynamically update the progress bar color
+                        bar.classList.remove("bg-primary", "bg-warning", "bg-danger");
+                        if (currentPercentage >= 95) {
+                            bar.classList.add("bg-primary"); // Normal color
+                        } else if (currentPercentage >= 80) {
+                            bar.classList.add("bg-warning"); // Warning color
+                        } else {
+                            bar.classList.add("bg-danger"); // Danger color
+                        }
+                    }, frameTime);
+                });
+            });
+
+            function exportToPDF() {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4'); // Set page size to A4
+
+                // Get the div content
+                const div = document.getElementById("reportDiv");
+                div.classList.remove('d-none')
+                const contentElements = div.children;
+
+                // Define starting position for content
+                let yPosition = 20; // Start position on the PDF
+                const margin = 10; // Page margin
+                const pageWidth = 210; // A4 width in mm
+                const rowHeight = 10; // Default row height for tables
+
+                // Set the font for text
+                pdf.setFont("helvetica", "normal");
+
+                // Loop through the div's child elements
+                for (let element of contentElements) {
+                    if (element.tagName === "H3") {
+                        // Handle heading
+                        pdf.setFontSize(14);
+                        pdf.text(element.innerText, 105, yPosition, null, null, "center");
+                        yPosition += 10; // Add spacing after the heading
+                    } else if (element.tagName === "DIV") {
+                        // Handle the summary report
+                        pdf.setFontSize(10);
+                        const lines = pdf.splitTextToSize(element.innerText.trim(), pageWidth - 20);
+                        lines.forEach((line) => {
+                            pdf.text(line, margin, yPosition);
+                            yPosition += 6; // Adjust line height
+                        });
+                    } else if (element.tagName === "TABLE") {
+                        // Handle the table
+                        const table = element;
+                        const rows = table.querySelectorAll("tr");
+
+                        // Define column widths for each column
+                        const columnWidths = [15, 25, 60, 35, 35, 40];
+                        const totalWidth = columnWidths.reduce((a, b) => a + b, 0);
+
+                        // Check if table width exceeds available width
+                        const availableWidth = pageWidth - (margin * 2);
+                        if (totalWidth > availableWidth) {
+                            const scalingFactor = availableWidth / totalWidth;
+                            columnWidths.forEach((width, index) => {
+                                columnWidths[index] = Math.floor(width * scalingFactor);
+                            });
+                        }
+
+                        rows.forEach((row, rowIndex) => {
+                            const cells = row.querySelectorAll("th, td");
+                            let xPosition = margin;
+
+                            if (rowIndex === 0) { // Header row
+                                pdf.setFont("helvetica", "bold");
+                                pdf.setFontSize(12);
+                            } else { // Data rows
+                                pdf.setFont("helvetica", "normal");
+                            }
+
+                            cells.forEach((cell, cellIndex) => {
+                                pdf.rect(xPosition, yPosition, columnWidths[cellIndex], rowHeight, "S"); // Draw cell borders
+                                pdf.text(cell.textContent.trim(), xPosition + 2, yPosition + 7);
+                                xPosition += columnWidths[cellIndex];
+                            });
+
+                            yPosition += rowHeight; // Move to the next row
+
+                            // Handle page overflow
+                            if (yPosition + rowHeight > 270) {
+                                pdf.addPage();
+                                yPosition = 20; // Reset yPosition for the new page
+                            }
+                        });
+                    }
+
+                    // Prevent content from overflowing past the page
+                    if (yPosition > 270) {
+                        pdf.addPage();
+                        yPosition = 20; // Reset yPosition for the new page
+                    }
+                }
+                // Save the PDF
+                pdf.save(`${reportName}.pdf`);
+                div.classList.add('d-none')
+            }
+
+
+
+
+
+            // Export table to Excel
+            function exportToExcel() {
+                const table = document.getElementById("pdfXlTable");
+
+                // Convert table rows to a 2D array
+                const data = [];
+                const rows = table.querySelectorAll("tr");
+                rows.forEach(row => {
+                    const rowData = [];
+                    const cells = row.querySelectorAll("th, td");
+                    cells.forEach(cell => {
+                        rowData.push(cell.textContent.trim());
+                    });
+                    data.push(rowData);
+                });
+
+                // Convert 2D array to Excel worksheet
+                const worksheet = XLSX.utils.aoa_to_sheet(data);
+
+                // Create a new workbook and append worksheet
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance Report");
+
+                // Export workbook
+                XLSX.writeFile(workbook, `${reportName}.xlsx`);
+            }
+
+            // Attach functions to buttons
+            document.getElementById("btnPdf").addEventListener("click", exportToPDF);
+            document.getElementById("btnXl").addEventListener("click", exportToExcel);
+        </script>
+
+
 
 
     </div>

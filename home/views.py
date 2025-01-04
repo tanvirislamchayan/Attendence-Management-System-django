@@ -30,7 +30,7 @@ def home(request):
     probidhans = Probidhan.objects.all().count()
     groups = Group.objects.all().count()
     subjects = Subject.objects.all().count()
-    students = Semester.objects.all().count()
+    students = Student.objects.all().count()
 
     context.update({
         'authors': authors,
