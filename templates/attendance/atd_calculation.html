@@ -229,9 +229,9 @@
         <!-- pdf and excel button -->
         {% if attendance_summary %}
 
-        <div id="reportName" class="col-6 my-2 text-left p-2">
+        <div class="col-6 my-2 text-left p-2">
             
-            Summary Report of: 
+            Summary Report for: 
             <strong style="border-bottom:1px solid black" class="pb-1">
                 {% if sel_date %}
                     {{ sel_date }}
@@ -290,7 +290,7 @@
             <div id="reportDiv" class="table-container d-none">
                 <h3 class="text-center">Image Polytechnic Institute</h3>
                 <div class="w-100 my-2 p-2 d-flex justify-content-between">
-                    <div id="reportName" class="text-left">
+                    <div  class="text-left">
                         Summary Report of: 
                         <strong style="border-bottom:1px solid black" class="pb-1">
                             {% if sel_date %}
@@ -303,7 +303,7 @@
                         </strong>
                     </div>
                     <div class="text-write">
-                        {{sel_dep_name}}, {{sell_sem_name}}
+                        {{sel_dep_name}}, {{sel_sem_name}}
                     </div>
                     
                 </div>
@@ -336,14 +336,25 @@
             
             <h4  class="text-center col-12 btn btn-outline-danger my-2"> NO ATTENDANCE DATA AVAILABLE </h4>
         </div>
+
         {% endif %}
+
+        <span id="reportname" class="d-none">
+            {{ sel_dep_name }}, {{ sel_sem_name }},
+            {% if sel_date %}
+            {{ sel_date }}
+            {% elif sel_month %}
+                {{ sel_month }}
+            {% elif sel_month_start and sel_month_end %}
+                {{ sel_month_start }} to {{ sel_month_end }}
+            {% endif %}
+        </span>
 
              <!-- Add jspdf and SheetJS (xlsx) libraries -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
        
         <script>
-            const reportName = document.getElementById('reportName').innerText
 
             document.addEventListener("DOMContentLoaded", function () {
                 const progressBars = document.querySelectorAll(".progress-bar");
@@ -382,6 +393,8 @@
             });
 
             function exportToPDF() {
+                const reportName = document.getElementById('reportname')
+                reportName.classList.remove('d-none')
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF('p', 'mm', 'a4'); // Set page size to A4
 
@@ -466,7 +479,8 @@
                     }
                 }
                 // Save the PDF
-                pdf.save(`${reportName}.pdf`);
+                pdf.save(`${reportName.innerText}.pdf`);
+                reportName.classList.add('d-none')
                 div.classList.add('d-none')
             }
 
@@ -498,7 +512,7 @@
                 XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance Report");
 
                 // Export workbook
-                XLSX.writeFile(workbook, `${reportName}.xlsx`);
+                XLSX.writeFile(workbook, `${reportName.innerText}.xlsx`);
             }
 
             // Attach functions to buttons

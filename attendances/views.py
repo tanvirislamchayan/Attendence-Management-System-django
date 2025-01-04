@@ -265,10 +265,10 @@ def calculate_attendance(request):
         sel_dep = context.get('sel_dep')
         sel_sem = context.get('sel_sem')
         sel_dep_name = Department.objects.get(id=sel_dep)
-        sell_sem_name = Semester.objects.get(id=sel_sem)
+        sel_sem_name = Semester.objects.get(id=sel_sem)
         context.update({
             'sel_dep_name': sel_dep_name,
-            'sell_sem_name': sell_sem_name,
+            'sel_sem_name': sel_sem_name,
         })
 
     return render(request, 'attendance/atd_calculation.html', context)
