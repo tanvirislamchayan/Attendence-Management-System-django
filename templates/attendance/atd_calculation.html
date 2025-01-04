@@ -229,10 +229,10 @@
         <!-- pdf and excel button -->
         {% if attendance_summary %}
 
-        <div class="col-6 my-2 text-left p-2">
+        <div id="reportName" class="col-6 my-2 text-left p-2">
             
             Summary Report of: 
-            <strong id="reportName" style="border-bottom:1px solid black" class="pb-1">
+            <strong style="border-bottom:1px solid black" class="pb-1">
                 {% if sel_date %}
                     {{ sel_date }}
                 {% elif sel_month %}
