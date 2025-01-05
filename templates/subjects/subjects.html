@@ -54,8 +54,8 @@
 
         {% if subjects %}
         <h2 class="w-100 p-2 text-center"> Subjects </h2>
+        {% for subject in subjects %}
         <div class="col-md-3 col-sm-6 p-2 subject-content">
-            {% for subject in subjects %}
             <div>
                 <h5> {{subject.name}} </h5>
                 <small class="{% if subject.code %} d-block {% else %} d-none {% endif %}" >Code: {{subject.code}} </small>
@@ -66,8 +66,8 @@
 
                 <small class="{% if subject.practical %} d-block {% else %} d-none {% endif %}" >Practical: {{subject.practical}} </small>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
         {% endif %}
     </div>
  </div>

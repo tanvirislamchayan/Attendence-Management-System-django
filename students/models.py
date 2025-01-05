@@ -10,8 +10,11 @@ from groups.models import Group
 # Create your models here.
 
 def validate_numeric(value):
+    # Convert the value to string if it's an integer or float
+    value = str(value)
     if not value.replace('.', '', 1).isdigit():  # Allows decimals like "3.5"
         raise ValidationError(f"{value} is not a valid number.")
+
 
 
 class Student(BaseModel):

@@ -117,7 +117,11 @@
                     <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'students' or request.resolver_match.url_name == 'add_students' %}selected{% endif %}" id="student">
                         <a class="menuitem p-2" href="{% url 'students' %}">Students</a>
                     </div>
-                
+
+                    <div class="aside-menu m-0 {% if request.resolver_match.url_name == 'students' or request.resolver_match.url_name == 'project_info' %}selected{% endif %}" id="projectInfo">
+                      <a class="menuitem p-2" href="{% url 'project_info' %}">Project Details</a>
+                    </div>
+
 
                 </div>
                                 

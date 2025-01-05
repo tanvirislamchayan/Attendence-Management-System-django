@@ -2,56 +2,80 @@
 {% load static %}
 {% block start %}
 
-<style>
-    /* Style for the table */
-    #pdfXlTable {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 16px;
+<!-- <style>
+    body {
         font-family: Arial, sans-serif;
-        text-align: left;
+        margin: 20px;
     }
 
-    /* Table headers */
-    #pdfXlTable th {
-        background-color: #0078C8; /* Dark blue background */
-        color: white; /* White text */
-        padding: 10px;
+    .table-container {
         border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .text-center {
         text-align: center;
     }
 
-    /* Table cells */
-    #pdfXlTable td {
-        padding: 10px;
-        border: 1px solid #ddd;
+    .text-left {
+        text-align: left;
     }
 
-    /* Right-aligned cells */
-    #pdfXlTable td.text-right {
+    .text-right {
         text-align: right;
     }
 
-    /* Alternate row colors */
-    #pdfXlTable tr:nth-child(even) {
-        background-color: #f9f9f9; /* Light grey */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 14px;
     }
 
-    #pdfXlTable tr:nth-child(odd) {
-        background-color: #ffffff; /* White */
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 10px;
     }
 
-    /* Hover effect for rows */
-    #pdfXlTable tr:hover {
-        background-color: #f1f1f1; /* Light grey on hover */
+    .table th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+        text-align: left;
     }
 
-    /* Table container (optional for responsive design) */
-    .table-container {
-        overflow-x: auto; /* Horizontal scroll for small screens */
+    .table-hover tr:hover {
+        background-color: #f1f1f1;
     }
-</style>
+
+    .my-2 {
+        margin: 10px 0;
+    }
+
+    .p-2 {
+        padding: 10px;
+    }
+
+    .pb-1 {
+        padding-bottom: 5px;
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .justify-content-between {
+        justify-content: space-between;
+    }
+
+    .w-100 {
+        width: 100%;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+</style> -->
 
 
    <!-- attendance calculation section start -->
@@ -290,7 +314,7 @@
             <div id="reportDiv" class="table-container d-none">
                 <h3 class="text-center">Image Polytechnic Institute</h3>
                 <div class="w-100 my-2 p-2 d-flex justify-content-between">
-                    <div  class="text-left">
+                    <div class="text-left">
                         Summary Report of: 
                         <strong style="border-bottom:1px solid black" class="pb-1">
                             {% if sel_date %}
@@ -302,10 +326,9 @@
                             {% endif %}
                         </strong>
                     </div>
-                    <div class="text-write">
-                        {{sel_dep_name}}, {{sel_sem_name}}
+                    <div class="text-right">
+                        {{ sel_dep_name }}, {{ sel_sem_name }}
                     </div>
-                    
                 </div>
                 <table id="pdfXlTable" class="table table-hover">
                     <thead>
@@ -315,7 +338,7 @@
                             <th>Name</th>
                             <th class="text-right">Classes</th>
                             <th class="text-right">Presents</th>
-                            <th>Attendance (%)</th>
+                            <th class="text-right">Attendance (%)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -353,6 +376,8 @@
              <!-- Add jspdf and SheetJS (xlsx) libraries -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
        
         <script>
 
@@ -392,98 +417,195 @@
                 });
             });
 
-            function exportToPDF() {
-                const reportName = document.getElementById('reportname')
-                reportName.classList.remove('d-none')
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF('p', 'mm', 'a4'); // Set page size to A4
+//             function exportToPDF() {
+//     const { jsPDF } = window.jspdf;
+//     const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size
+//     const reportDiv = document.getElementById("reportDiv");
 
-                // Get the div content
-                const div = document.getElementById("reportDiv");
-                div.classList.remove('d-none')
-                const contentElements = div.children;
+//     const pageWidth = 210; // A4 width in mm
+//     const margin = 10; // Margin from both sides
+//     const contentWidth = pageWidth - margin * 2;
 
-                // Define starting position for content
-                let yPosition = 20; // Start position on the PDF
-                const margin = 10; // Page margin
-                const pageWidth = 210; // A4 width in mm
-                const rowHeight = 10; // Default row height for tables
+//     let yPosition = 20; // Start position on the PDF
 
-                // Set the font for text
+//     // Add heading
+//     const heading = reportDiv.querySelector("h3").innerText;
+//     pdf.setFontSize(16);
+//     pdf.text(heading, pageWidth / 2, yPosition, { align: "center" });
+//     yPosition += 10;
+
+//     // Add summary
+//     const summaryDiv = reportDiv.querySelector(".w-100");
+//     const summaryText = summaryDiv.innerText.trim();
+//     pdf.setFontSize(10);
+//     const lines = pdf.splitTextToSize(summaryText, contentWidth);
+//     lines.forEach((line) => {
+//         pdf.text(line, margin, yPosition);
+//         yPosition += 6;
+//     });
+
+//     // Add table
+//     const table = reportDiv.querySelector("table");
+//     const rows = table.querySelectorAll("tr");
+
+//     const columnWidths = [];
+//     const headerCells = rows[0].querySelectorAll("th");
+//     headerCells.forEach(() => columnWidths.push(contentWidth / headerCells.length));
+
+//     yPosition += 5; // Space before the table
+
+//     rows.forEach((row, rowIndex) => {
+//         const cells = row.querySelectorAll("th, td");
+
+//         let xPosition = margin;
+
+//         cells.forEach((cell, cellIndex) => {
+//             const text = cell.innerText.trim();
+//             const cellWidth = columnWidths[cellIndex];
+
+//             // Adjust font and style for header
+//             if (rowIndex === 0) {
+//                 pdf.setFont("helvetica", "bold");
+//                 pdf.setFontSize(10);
+//             } else {
+//                 pdf.setFont("helvetica", "normal");
+//                 pdf.setFontSize(10);
+//             }
+
+//             // Draw cell content
+//             pdf.text(text, xPosition + 2, yPosition + 4); // Adjust for padding
+//             xPosition += cellWidth;
+
+//             // Draw cell border
+//             pdf.rect(margin + cellIndex * cellWidth, yPosition, cellWidth, 5); // Reduce height to 8
+//         });
+
+//         yPosition += 5; // Reduce row height
+
+//         // Handle page overflow
+//         if (yPosition > 270) {
+//             pdf.addPage();
+//             yPosition = 20;
+//         }
+//     });
+
+//     // Save the PDF
+//     pdf.save("Report.pdf");
+// }
+
+
+function exportToPDF() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size
+    const reportDiv = document.getElementById("reportDiv");
+    reportDiv.classList.remove('d-none')
+
+    const pageWidth = 210; // A4 width in mm
+    const margin = 10; // Margin on both sides
+    const contentWidth = pageWidth - margin * 2;
+
+    let yPosition = 20; // Start position on the PDF
+
+    // Add heading
+    const heading = reportDiv.querySelector("h3").innerText;
+    pdf.setFontSize(16);
+    pdf.text(heading, pageWidth / 2, yPosition, { align: "center" });
+    yPosition += 6;
+
+    // Add summary
+    const summaryDiv = reportDiv.querySelector(".w-100");
+    const summaryText = summaryDiv.innerText.trim();
+    pdf.setFontSize(10);
+    const lines = pdf.splitTextToSize(summaryText, contentWidth);
+    lines.forEach((line) => {
+        pdf.text(line, margin, yPosition);
+        yPosition += 6;
+    });
+
+    // Add table
+    const table = reportDiv.querySelector("table");
+    const rows = table.querySelectorAll("tr");
+
+    // Calculate column widths dynamically
+    const columnWidths = [];
+    const fontSize = 10;
+    pdf.setFontSize(fontSize);
+
+    rows.forEach((row, rowIndex) => {
+        const cells = row.querySelectorAll("th, td");
+
+        cells.forEach((cell, cellIndex) => {
+            const text = cell.innerText.trim();
+            const textWidth = pdf.getStringUnitWidth(text) * fontSize * 0.3528; // Convert to mm
+            columnWidths[cellIndex] = Math.max(columnWidths[cellIndex] || 0, textWidth + 6); // Add padding
+        });
+    });
+
+    // Scale column widths to fit page width
+    const totalWidth = columnWidths.reduce((sum, width) => sum + width, 0);
+    const scaleFactor = contentWidth / totalWidth;
+    columnWidths.forEach((width, index) => {
+        columnWidths[index] = width * scaleFactor;
+    });
+
+    // Render the table
+    yPosition += 6; // Space before the table
+
+    rows.forEach((row, rowIndex) => {
+        const cells = row.querySelectorAll("th, td");
+        let xPosition = margin;
+
+        cells.forEach((cell, cellIndex) => {
+            const text = cell.innerText.trim();
+            const cellWidth = columnWidths[cellIndex];
+
+            // Adjust font and style for header
+            if (rowIndex === 0) {
+                pdf.setFont("helvetica", "bold");
+                pdf.setFontSize(10);
+            } else {
                 pdf.setFont("helvetica", "normal");
-
-                // Loop through the div's child elements
-                for (let element of contentElements) {
-                    if (element.tagName === "H3") {
-                        // Handle heading
-                        pdf.setFontSize(14);
-                        pdf.text(element.innerText, 105, yPosition, null, null, "center");
-                        yPosition += 10; // Add spacing after the heading
-                    } else if (element.tagName === "DIV") {
-                        // Handle the summary report
-                        pdf.setFontSize(10);
-                        const lines = pdf.splitTextToSize(element.innerText.trim(), pageWidth - 20);
-                        lines.forEach((line) => {
-                            pdf.text(line, margin, yPosition);
-                            yPosition += 6; // Adjust line height
-                        });
-                    } else if (element.tagName === "TABLE") {
-                        // Handle the table
-                        const table = element;
-                        const rows = table.querySelectorAll("tr");
-
-                        // Define column widths for each column
-                        const columnWidths = [15, 25, 60, 35, 35, 40];
-                        const totalWidth = columnWidths.reduce((a, b) => a + b, 0);
-
-                        // Check if table width exceeds available width
-                        const availableWidth = pageWidth - (margin * 2);
-                        if (totalWidth > availableWidth) {
-                            const scalingFactor = availableWidth / totalWidth;
-                            columnWidths.forEach((width, index) => {
-                                columnWidths[index] = Math.floor(width * scalingFactor);
-                            });
-                        }
-
-                        rows.forEach((row, rowIndex) => {
-                            const cells = row.querySelectorAll("th, td");
-                            let xPosition = margin;
-
-                            if (rowIndex === 0) { // Header row
-                                pdf.setFont("helvetica", "bold");
-                                pdf.setFontSize(12);
-                            } else { // Data rows
-                                pdf.setFont("helvetica", "normal");
-                            }
-
-                            cells.forEach((cell, cellIndex) => {
-                                pdf.rect(xPosition, yPosition, columnWidths[cellIndex], rowHeight, "S"); // Draw cell borders
-                                pdf.text(cell.textContent.trim(), xPosition + 2, yPosition + 7);
-                                xPosition += columnWidths[cellIndex];
-                            });
-
-                            yPosition += rowHeight; // Move to the next row
-
-                            // Handle page overflow
-                            if (yPosition + rowHeight > 270) {
-                                pdf.addPage();
-                                yPosition = 20; // Reset yPosition for the new page
-                            }
-                        });
-                    }
-
-                    // Prevent content from overflowing past the page
-                    if (yPosition > 270) {
-                        pdf.addPage();
-                        yPosition = 20; // Reset yPosition for the new page
-                    }
-                }
-                // Save the PDF
-                pdf.save(`${reportName.innerText}.pdf`);
-                reportName.classList.add('d-none')
-                div.classList.add('d-none')
+                pdf.setFontSize(10);
             }
 
+            // Wrap text if it exceeds the column width
+            const cellLines = pdf.splitTextToSize(text, cellWidth - 2); // Adjust for padding
+            cellLines.forEach((line, lineIndex) => {
+                pdf.text(line, xPosition + 2, yPosition + 4 + lineIndex * 5); // Adjust padding
+            });
+
+            // Draw cell border
+            const cellHeight = Math.max(6, cellLines.length * 5); // Adjust height dynamically based on content
+            pdf.rect(xPosition, yPosition, cellWidth, cellHeight);
+
+            xPosition += cellWidth;
+        });
+
+        const maxHeight = Math.max(
+            ...Array.from(cells).map((cell, cellIndex) => {
+                const cellText = cell.innerText.trim();
+                const lines = pdf.splitTextToSize(cellText, columnWidths[cellIndex] - 2);
+                return lines.length * 5;
+            })
+        );
+
+        yPosition += 6;
+
+        // Handle page overflow
+        if (yPosition > 270) {
+            pdf.addPage();
+            yPosition = 20;
+        }
+    });
+
+    
+    // Save the PDF
+    const reportName = document.getElementById('reportname');
+    reportName.classList.remove('d-none'); 
+    pdf.save(`${reportName.innerText}.pdf`);
+    reportName.classList.add('d-none'); 
+    reportDiv.classList.add('d-none');
+}
 
 
 

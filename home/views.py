@@ -45,3 +45,37 @@ def home(request):
     })
 
     return render(request, 'home/index.html', context)
+
+
+def project_info(request):
+    context = {
+        'page': 'Dashboard'
+    }
+
+    if not request.user.is_authenticated:
+        messages.warning(request, 'Login First!!')
+        return redirect('user_login')
+    
+    authors = Teacher.objects.filter(is_author = True, is_active=True, is_teacher=True).count()
+    teachers = Teacher.objects.filter(is_active=True, is_teacher=True).count()
+    departments = Department.objects.all().count()
+    semesters = Semester.objects.all().count()
+    sessions = Session.objects.all().count()
+    probidhans = Probidhan.objects.all().count()
+    groups = Group.objects.all().count()
+    subjects = Subject.objects.all().count()
+    students = Student.objects.all().count()
+
+    context.update({
+        'authors': authors,
+        'teachers': teachers,
+        'departments': departments,
+        'semesters': semesters,
+        'sessions': sessions,
+        'probidhans': probidhans,
+        'groups': groups,
+        'subjects': subjects,
+        'students': students,
+    })
+
+    return render(request, 'home/index.html', context)
