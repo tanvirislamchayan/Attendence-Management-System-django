@@ -22,19 +22,16 @@
   <body>
 
     <!-- loader section start -->
-     <section id="loader-section" class="loader-section">
-        <div class="loader">
-            <svg viewBox="0 0 200 200">
-              <circle cx="100" cy="100" r="50"></circle>
-            </svg>
-            <svg viewBox="0 0 200 200">
-              <circle cx="100" cy="100" r="50"></circle>
-            </svg>
-            <svg viewBox="0 0 200 200">
-              <circle cx="100" cy="100" r="50"></circle>
-            </svg>
-          </div>
-     </section>
+    <div id="loaderBody" class="loader-body">
+      <div class="loader_div">
+          <span class="dot-loader">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+          </span>
+      </div>
+    </div>
+
     <!-- loader section end -->
 
 
@@ -53,8 +50,13 @@
                 
               </ul>
               <div class="form-inline my-2 my-lg-0">
-                <a href="{% url 'user_logout' %}" class="btn btn-outline-danger btn-sm"><i class="fa-sharp-duotone fa-solid fa-right-from-bracket fa-beat"></i> Log out</a>
+                <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm mr-2"><i class="fa-solid fa-user"></i> Profile</a>
               </div>
+
+              <div class="form-inline my-2 my-lg-0">
+                <a href="{% url 'user_logout' %}" class="btn btn-outline-danger btn-sm"><i class="fa-sharp-duotone fa-solid fa-right-from-bracket"></i> Log out</a>
+              </div>
+
             </div>
           </nav>
      </header>
@@ -162,5 +164,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- custom js -->
      <script src="{% static 'js/app.js' %}"></script>
+
+
+     {% if messages %}
+     {% for message in messages %}
+         <script>
+             document.addEventListener('DOMContentLoaded', () => {
+                 fadeIn("{{ message.tags }}", "{{ message|escapejs }}");
+             });
+         </script>
+     {% endfor %}
+    {% endif %}
+ 
+
+
+
   </body>
 </html>

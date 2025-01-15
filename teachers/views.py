@@ -233,3 +233,15 @@ def user_logout(request):
 
     # Redirect to the login page
     return redirect('user_login')
+
+# profile
+def profile(request):
+    user_obj = request.user
+    print(user_obj)
+    teacher_obj = user_obj.teacher
+    print(teacher_obj)
+    context = {
+        'page': f'{user_obj.first_name} {user_obj.last_name}',
+        'teacher': teacher_obj,
+    }
+    return render(request, 'teacher/teacher_view.html', context)

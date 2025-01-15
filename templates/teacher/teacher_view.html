@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block start %}
+
+    <div class="row">
+        <!-- Profile Image Section -->
+        <div class="col-md-3 p-2 text-center">
+            <div class="img-middle overflow-hidden shadow-sm" style="aspect-ratio: 9/11; background-color: #f8f9fa;">
+                {% if teacher.image %}
+                <img src="/media/{{ teacher.image }}" alt="Teacher image" class="img-fluid h-100">
+                {% else %}
+                <img src="{% static '/img/upload-img.png' %}" alt="Default profile" class="img-fluid h-100">
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Profile Information Section -->
+        <div class="col-md-9 pt-2">
+            <h4 class="mt-2">{{ teacher.user.first_name }} {{ teacher.user.last_name }}</h4>
+            <p class="text-muted mb-1">
+                {% if teacher.short_designation %}{{ teacher.short_designation }}{% else %}No designation{% endif %}
+                -
+                {% if teacher.short_department %}{{ teacher.short_department }}{% else %}No department{% endif %}
+            </p>
+            <hr class="bg-primary" style="height: 3px;">
+
+            <div class="mb-3">
+                <p><strong>Mobile Number:</strong> {{ teacher.mobile_number }}</p>
+                <p><strong>Department:</strong>
+                    {% if teacher.department %}{{ teacher.department.name }}{% else %}N/A{% endif %}
+                </p>
+                <p><strong>Designation:</strong>
+                    {% if teacher.designation %}{{ teacher.designation.name }}{% else %}N/A{% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <h5 class="text-primary">About</h5>
+            <p>{% if teacher.details %}{{ teacher.details }}{% else %}No additional details provided.{% endif %}</p>
+        </div>
+    </div>
+
+{% endblock %}
