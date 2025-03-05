@@ -1,10 +1,8 @@
 django
 asgiref
 diff-match-patch
-# Django
 django-import-export
 et_xmlfile
-mysqlclient
 openpyxl
 pillow
 PyMySQL
