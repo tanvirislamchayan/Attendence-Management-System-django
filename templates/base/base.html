@@ -168,6 +168,8 @@
 
      {% if messages %}
      {% for message in messages %}
+      <h3>message</h3>
+
          <script>
              document.addEventListener('DOMContentLoaded', () => {
                  fadeIn("{{ message.tags }}", "{{ message|escapejs }}");

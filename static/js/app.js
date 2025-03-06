@@ -1,6 +1,6 @@
 window.addEventListener("load", function() {
     const loaderSection = document.getElementById("loaderBody");
-    loaderSection.style.display = "none";
+    loaderSection.classList.add('d-none')
 });
 
 document.addEventListener('DOMContentLoaded', () => {
