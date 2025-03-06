@@ -132,61 +132,71 @@ a.menuitem:hover {
 
 
 /* loader section */
-.loader-section {
+.loader-body {
+  position: fixed;
   height: 100vh;
   width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  /* background-color: red; */
+  z-index: 10000;
   display: grid;
   place-items: center;
   place-content: center;
-  background-color: var(--background-2);
-  z-index: 1001;
-  position: fixed;
 }
 
-.loader {
-  position: relative;
-  width: 200px;
-  height: 200px;
+.loader_div {
+  background-color: #0005;
+  padding: 70px 100px;
+  border-radius: .3rem;
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
 }
 
-.loader svg {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Dot Loader Styles */
+.dot-loader {
+  display: flex;
+  gap: 5px;
 }
 
-.loader svg circle {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 10px;
-  stroke-linecap: round;
-  animation: animate 2s linear infinite;
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  animation: bounce 1.5s infinite ease-in-out;
 }
 
-.loader svg:nth-child(1) circle {
-  filter: blur(10px);
-  stroke: #43acff;
+/* Individual Dot Delays */
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.6s;
 }
 
-.loader svg:nth-child(2) circle {
-  filter: blur(20px);
-  stroke: #43acff;
-}
-
-@keyframes animate {
-  0% {
-    stroke-dasharray: 295;
-    stroke-dashoffset: 295;
+/* Bounce Animation */
+@keyframes bounce {
+  0%, 80%, 100% {
+      transform: scale(0);
+      opacity: 0.5;
   }
-  50% {
-    stroke-dasharray: 295;
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dasharray: 295;
-    stroke-dashoffset: -295;
+  40% {
+      transform: scale(1);
+      opacity: 1;
   }
 }
+
 
 
  /* header section */
@@ -498,3 +508,111 @@ header {
   overflow: hidden;
   background: #fff; 
 }
+
+
+/* message */
+
+.main_div {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  /* background-color: #0005; */
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: 10000;
+}
+
+.midle_div {
+  border: 0 !important;
+  box-shadow: 0px 0px 20px #0005;
+  border-radius: .3rem !important;
+  transform: scale(0);
+  opacity: 0;
+  animation: popUp .3s ease-out forwards;
+  position: relative;
+  border-radius: .3rem !important;
+  overflow: hidden;
+}
+
+.midle_div.fadout {
+  animation: fadeOut .3s ease-in forwards;
+}
+
+/* Pop-up animation (scale up and fade in) */
+@keyframes popUp {
+  0% {
+      transform: scale(0);
+      opacity: 0;
+  }
+  70% {
+      transform: scale(1.1); 
+      opacity: 1; 
+  }
+  100% {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
+
+/* Fade-out animation (fade out and scale down) */
+@keyframes fadeOut {
+  0% {
+      transform: scale(1); 
+      opacity: 1;
+  }
+  50% {
+      transform: scale(1.1);
+      opacity: 1;
+  }
+  100% {
+      transform: scale(0);
+      opacity: 0;
+  }
+}
+
+.msg_icon {
+  font-size: 50px;
+  color: green;
+  margin-top: 0;
+}
+
+.msg_icon.error {
+  color: red;
+}
+
+.msg_icon.info {
+  color: #0dcaf0;
+}
+
+.msg_icon.warning {
+  color: orange;
+}
+
+.btn-no-radious {
+  border-radius: 0 !important;
+}
+
+.card-title {
+  text-shadow: 0px 0px 20px #0005;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  animation: progressbar 2s .3s linear forwards;
+}
+
+@keyframes progressbar {
+  0% {
+      width: 100%;
+  }
+   100% {
+      width: 0%;
+   }
+}
+
