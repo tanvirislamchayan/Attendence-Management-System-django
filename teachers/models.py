@@ -34,6 +34,7 @@ class Teacher(BaseModel):
     is_active = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=True)
     is_author = models.BooleanField(default=False)
+    is_hidden = models.BooleanField(default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher')
     mobile_number = models.CharField(max_length=15, unique=True, validators=[MOBILE_REGEX])
     designation = models.ForeignKey(Designation, on_delete=models.SET_NULL, null=True, blank=True)

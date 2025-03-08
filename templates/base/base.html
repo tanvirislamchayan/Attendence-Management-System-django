@@ -17,7 +17,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>DIMO | {{ page }}</title>
+    <title>AMS | {{ page }}</title>
 </head>
   <body>
 
@@ -38,7 +38,9 @@
     <!-- header section start -->
      <header id="header">
         <nav class="navbar navbar-expand-lg navbar-light text-white bg-transparent">
-            <a class="navbar-brand text-white" href="{% url 'home' %}">DIMO</a>
+            <a class="navbar-brand text-white" href="{% url 'home' %}">
+                <img src="{% static 'img/jsTechNology.png' %}" alt="LOGO" height="40px">
+            </a>
             <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <!-- <span class="navbar-toggler-icon "></span> -->
               <i class="fa-solid fa-bars fa-xl" style="color: #ffffff;"></i>
@@ -50,11 +52,11 @@
                 
               </ul>
               <div class="form-inline my-2 my-lg-0">
-                <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm mr-2"><i class="fa-solid fa-user"></i> Profile</a>
+                <a href="{% url 'profile' %}" class="btn btn-dark btn-sm mr-2"><i class="fa-solid fa-user"></i> Profile</a>
               </div>
 
               <div class="form-inline my-2 my-lg-0">
-                <a href="{% url 'user_logout' %}" class="btn btn-outline-danger btn-sm"><i class="fa-sharp-duotone fa-solid fa-right-from-bracket"></i> Log out</a>
+                <a href="{% url 'user_logout' %}" class="btn btn-dark btn-sm"><i class="fa-sharp-duotone fa-solid fa-right-from-bracket"></i> Log out</a>
               </div>
 
             </div>

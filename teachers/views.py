@@ -14,7 +14,7 @@ def authors(request):
         'page': 'Authors'
     }
 
-    authors = Teacher.objects.filter(is_author=True, is_active=True, is_teacher=True)
+    authors = Teacher.objects.filter(is_author=True, is_active=True, is_teacher=True, is_hidden=False)
 
     context.update({
         'authors': authors
@@ -74,7 +74,8 @@ def add_authors(request):
                 details=details,
                 is_author=is_author,
                 is_teacher=is_teacher,
-                is_active=True
+                is_active=True,
+                is_hidden=False
             )
 
             if image:
@@ -96,7 +97,7 @@ def teachers(request):
     context = {
         'page': 'Teachers',
         'departments': Department.objects.filter(
-            teachers__is_teacher=True, teachers__is_active=True
+            teachers__is_teacher=True, teachers__is_active=True, teachers__is_hidden=False
         ).distinct()  # Fetch departments with at least one active teacher
     }
 
@@ -160,7 +161,8 @@ def add_teachers(request):
                 details=details,
                 is_author=is_author,
                 is_teacher=is_teacher,
-                is_active=True
+                is_active=True,
+                is_hidden=False
             )
 
             # Save image if provided
